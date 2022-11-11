@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: EquipmentTemplate
+  m_EditorClassIdentifier: 
+  m_GroupName: EquipmentTemplate
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 31004b0364750764ea88a71802ab5cda
+  m_SerializeEntries:
+  - m_GUID: f47536b55a8b2e74fbe9580298ea72a1
+    m_Address: Assets/Resources_moved/Item Template/Equipments/TestCloth.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: 916e9717397642948bd4dc794d4f8fdb
+    m_Address: Assets/Resources_moved/Item Template/Equipments/TestHead.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: c43bf685a44a9a84e968948bec70dc3f
+    m_Address: Assets/Resources_moved/Item Template/Equipments/TestShoes.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: 71bef3a29195cb645abec8215eafbf78
+    m_Address: Assets/Resources_moved/Item Template/Equipments/TestWeapon.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e99fa8458a898e548bf079a14c502590, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ad0fb6f99b276ff4683fd59476cb5bf2, type: 2}
+    - {fileID: 11400000, guid: a011df6ac2f8a2d47b6c2015172af23a, type: 2}

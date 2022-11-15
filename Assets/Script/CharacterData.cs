@@ -5,14 +5,17 @@ using Sirenix.OdinInspector;
 
 namespace Nagopia {
 
+    [System.Serializable]
     public class CharacterData {
         public CharacterData(ref CharaProfTemplate template,ref int level) {
             this.profession = template.AdaptProf;
             this.Position = RandomNumberGenerator.Average_GetRandomNumber(template.PossiblePosition.min, template.PossiblePosition.max);
-            this.level = level;
+            this.Level = level;
             GenerateAbility(ref template,ref level);
             GenerateMental(ref template);
         }
+
+        public string name;
 
         /// <summary>
         /// 角色的血量成长曲线
@@ -76,7 +79,7 @@ namespace Nagopia {
         private GameDataBase.CharacterProfession profession;
 
         /// <summary>
-        /// 角色的领导能力，范围为1到20
+        /// 角色的领导能力，默认范围为1到20
         /// </summary>
         public byte LEA { get { return lea; } 
             set {
@@ -87,7 +90,7 @@ namespace Nagopia {
         private byte lea;
 
         /// <summary>
-        /// 角色的合作能力，范围为1到20
+        /// 角色的合作能力，默认范围为1到20
         /// </summary>
         public byte COO { get { return coo; } 
             set {
@@ -98,7 +101,7 @@ namespace Nagopia {
         private byte coo;
 
         /// <summary>
-        /// 角色的冷静能力，范围为1到20
+        /// 角色的冷静能力，默认范围为1到20
         /// </summary>
         public byte CAL { get { return cal; }
             set {
@@ -120,8 +123,7 @@ namespace Nagopia {
         private byte mor;
 
         public bool SetHead(HeadEquipment equipment,out Equipment oldEquipment) {
-            oldEquipment = null;
-            if(equipment.ValidateProf(ref profession)) {
+            if(ReferenceEquals(equipment,null)||equipment.ValidateProf(ref profession)) {
                 oldEquipment = head;
                 head = equipment;
                 return true;
@@ -135,7 +137,7 @@ namespace Nagopia {
         public HeadEquipment Head => this.head;
 
         public bool SetWeapon(WeaponEquipment equipment,out Equipment oldEquipment) {
-            if (equipment.ValidateProf(ref profession)) {
+            if (ReferenceEquals(equipment, null) || equipment.ValidateProf(ref profession)) {
                 oldEquipment = this.weapon;
                 this.weapon = equipment;
                 return true;
@@ -149,7 +151,7 @@ namespace Nagopia {
         public WeaponEquipment Weapon => this.weapon;
 
         public bool SetCloth(ClothEquipment equipment,out Equipment oldEquipment) {
-            if (equipment.ValidateProf(ref profession)) {
+            if (ReferenceEquals(equipment, null) || equipment.ValidateProf(ref profession)) {
                 oldEquipment = this.cloth;
                 this.cloth = equipment;
                 return true;
@@ -163,7 +165,7 @@ namespace Nagopia {
         public ClothEquipment Cloth=>this.cloth;
 
         public bool SetShoes(ShoesEquipment equipment,out Equipment oldEquipment) {
-            if (equipment.ValidateProf(ref profession)) {
+            if (ReferenceEquals(equipment, null) || equipment.ValidateProf(ref profession)) {
                 oldEquipment = this.shoes;
                 this.shoes = equipment;
                 return true;

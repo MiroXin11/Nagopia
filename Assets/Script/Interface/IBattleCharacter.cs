@@ -18,5 +18,9 @@ namespace Nagopia {
         int POSITION{ get;}
 
         void ThinkMove(BattleInfo battleInfo);
+
+        void UnderAttack(AttackEventData attackEvent);
+
+        void TeammateUnderAttack(AttackEventData attackEvent);
     }
 }

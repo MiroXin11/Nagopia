@@ -27,12 +27,24 @@ namespace Nagopia
 
         public int level;
 
+        /// <summary>
+        /// 领导力
+        /// </summary>
         public byte LEA;
 
+        /// <summary>
+        /// 合作能力
+        /// </summary>
         public byte COO;
 
+        /// <summary>
+        /// 镇静度
+        /// </summary>
         public byte CAL;
 
+        /// <summary>
+        /// 道德值
+        /// </summary>
         public byte MOR;
 
         public GameDataBase.EnemyRarity rank;

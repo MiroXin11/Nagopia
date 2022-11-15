@@ -22,8 +22,7 @@ namespace Nagopia
 
         public string Name { get => data.name; }
 
-        void IBattleCharacter.ThinkMove(BattleInfo battleInfo)
-        {
+        void IBattleCharacter.ThinkMove(BattleInfo battleInfo){
             switch (this.data.duty)
             {
                 case GameDataBase.EnemyDuty.ATTACKER:
@@ -37,16 +36,29 @@ namespace Nagopia
             }
         }
 
-        private void NormalAttackerAttack(ref BattleInfo battleInfo)
-        {
+        private void NormalAttackerAttack(ref BattleInfo battleInfo){
             var target = battleInfo.enemy_sortByPos[0];
+            IBattleCharacter temp = this;
+            int damage = (int)(this.ATK - target.DEF);
+            AttackEventData attackEventData = new AttackEventData(ref temp, ref target,damage ,ref battleInfo);
+            SingletonMonobehaviour<EventHandler>.Instance.AttackEvent(attackEventData);
         }
 
-        private void CureAttack(ref BattleInfo battleInfo)
-        {
+        private void CureAttack(ref BattleInfo battleInfo){
             var teammates = battleInfo.teammate_sortBySPE;
             teammates.Sort((x, y) => x.HP.CompareTo(y.HP));
             var target = teammates[0];//选择血量最少的友方进行治疗，虽然默认都是最前排
+        }
+
+        public void TeammateUnderAttack(AttackEventData eventData){
+
+        }
+
+        public void UnderAttack(AttackEventData attackEvent) {
+            var damage = attackEvent.Damage;
+            if(this.HP-damage < 0) {//表示自己受到下一次攻击就会死去
+
+            }
         }
 
         public float atb;

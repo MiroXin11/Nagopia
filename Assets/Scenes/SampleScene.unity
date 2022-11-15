@@ -216,6 +216,62 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &868732017
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 868732019}
+  - component: {fileID: 868732018}
+  m_Layer: 0
+  m_Name: Timing Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &868732018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868732017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d2433f4570c1404da40af9ea0b12741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeBetweenSlowUpdateCalls: 0.14285715
+  ProfilerDebugAmount: 0
+  AutoTriggerManualTimeframe: 1
+  UpdateCoroutines: 0
+  FixedUpdateCoroutines: 0
+  LateUpdateCoroutines: 0
+  SlowUpdateCoroutines: 0
+  RealtimeUpdateCoroutines: 0
+  EditorUpdateCoroutines: 0
+  EditorSlowUpdateCoroutines: 0
+  EndOfFrameCoroutines: 0
+  ManualTimeframeCoroutines: 0
+  _instanceID: 1
+--- !u!4 &868732019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868732017}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +366,9 @@ GameObject:
   - component: {fileID: 1241825454}
   - component: {fileID: 1241825456}
   - component: {fileID: 1241825455}
+  - component: {fileID: 1241825457}
+  - component: {fileID: 1241825459}
+  - component: {fileID: 1241825458}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -355,3 +414,97 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c27dd0049979d448fd57ac27004e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  datas: []
+--- !u!114 &1241825457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241825453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be2e1bcf1e9c97241b09c7dcd515c967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1241825458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241825453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 0
+  restartWhenComplete: 0
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 0
+  externalBehavior: {fileID: 0}
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(604.100037,30)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(4.10003662,120)"},"ID":1,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityString.GetRandomString","NodeData":{"Offset":"(-125.899963,150)"},"ID":2,"Name":"Get
+        Random String","Instant":true,"SharedString[]source":[],"SharedStringstoreResult":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"IsShared":true,"IsDynamic":true}}]},"DetachedTasks":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityString.Replace","NodeData":{"Offset":"(604.100037,150)"},"ID":3,"Name":"Replace","Instant":true,"SharedStringtargetString":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":""},"SharedStringoldString":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":""},"SharedStringnewString":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":""},"SharedStringstoreResult":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"IsShared":true,"StringmValue":""}}]}'
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects: []
+        byteData: 
+        byteDataArray: 
+      Version: 1.7.3
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
+--- !u!114 &1241825459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241825453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 0
+  restartWhenComplete: 0
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 0
+  externalBehavior: {fileID: 0}
+  mBehaviorSource:
+    behaviorName: ForTest
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: '{}'
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects: []
+        byteData: 
+        byteDataArray: 
+      Version: 1.7.3
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0

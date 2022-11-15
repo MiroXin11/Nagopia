@@ -9,7 +9,6 @@ using System.Linq;
 using UnityEditor;
 
 namespace Nagopia {
-    
     public class GameDataBase {
         static bool hasIni = false;
 
@@ -35,10 +34,21 @@ namespace Nagopia {
                 //Debug.Log("Load Config");
             }
 #else
-            var handle=Addressables.LoadAsset<GameConfig>("GameConfig");
+            var handle=Addressables.LoadAssetAsync<GameConfig>("GameConfig");
             handle.WaitForCompletion();
             config=handle.Result;
 #endif
+            var MentalBuffFloor = config.MentalBuffFloor;
+            var MentalBuffCeiling = config.MentalBuffCeiling;
+            var maxMental = config.MaxMental;
+            var minMental = config.MinMental;
+            int difference = maxMental - minMental+1;
+            double gap = (MentalBuffCeiling - MentalBuffFloor) / (difference - 1.0);
+            MentalBuffParams = new List<double>(difference+1);
+            MentalBuffParams.Add(0);
+            for(int i=1;i<MentalBuffParams.Capacity;i++){
+                MentalBuffParams.Add(MentalBuffFloor + (i - 1) * gap);
+            }
         }
 
         private static void InitializeProfTemplate() {
@@ -209,6 +219,24 @@ namespace Nagopia {
             MOR,
         }
 
+        public enum EnemyRarity {
+            [InspectorName("弱")]
+            UNDERDOG=0,
+
+            [InspectorName("普通")]
+            NORMAL=1,
+
+            [InspectorName("精英")]
+            ELITE=3,
+
+            BOSS=10,
+        }
+
+        public enum EnemyDuty{
+            ATTACKER,
+            CURE,
+        }
+
         public static byte GameStage = 1;
 
         [NonSerialized,OdinSerialize]
@@ -219,6 +247,10 @@ namespace Nagopia {
 
         [HideInInspector]
         public static GameConfig Config => config;
+
+        public static double[] mentalBuffs=>MentalBuffParams.ToArray();
+
+        private static List<double> MentalBuffParams;
 
         private static readonly Dictionary<GameDataBase.CharacterProfession, List<CharaProfTemplate>> CharaTemplates = new Dictionary<CharacterProfession, List<CharaProfTemplate>>();
         private static readonly Dictionary<GameDataBase.ItemType, List<BaseItemTemplate>> ItemTemplates = new Dictionary<ItemType, List<BaseItemTemplate>>();

@@ -42,6 +42,14 @@ namespace Nagopia {
             }
         }
 
+        public void UnderAttack(AttackEventData data) {
+
+        }
+
+        public void TeammateUnderAttack(AttackEventData data) {
+
+        }
+
         private void ConsiderAttack(ref BattleInfo battleInfo) {
             IBattleCharacter target;
             switch (this.data.Profession) {

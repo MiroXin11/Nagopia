@@ -57,7 +57,7 @@ namespace Nagopia
         public void UnderAttack(AttackEventData attackEvent) {
             var damage = attackEvent.Damage;
             if(this.HP-damage < 0) {//表示自己受到下一次攻击就会死去
-
+                
             }
         }
 

@@ -51,4 +51,7 @@ public class GameConfig : SerializedScriptableObject
     [PropertyRange(1,10)]
     public readonly byte MaxTeamMember = 5;
 
+    [PropertyRange(0,1)]
+    public readonly double EscapeEventBaseProbability = 0.2;
+
 }

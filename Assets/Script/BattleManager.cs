@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MEC;
@@ -32,12 +32,12 @@ namespace Nagopia {
             for(int i = 0; i < count; ++i) {
                 IBattleCharacter character = enemy[i];
                 JudgePlayerEnemy.Add(character, false);
-                if (character.HP > 0)//ÆäÊµÃ»É¶ÒâÒå£¬²»¹ıÑÏ½÷µã
+                if (character.HP > 0)//å…¶å®æ²¡å•¥æ„ä¹‰ï¼Œä¸è¿‡ä¸¥è°¨ç‚¹
                     allUsableCharacter.Add(character);
             }
 
             allUsableCharacter.Sort(SortBySpeed);
-            foreach (var character in allUsableCharacter) {//¸øÒ»¸öÆğ²½Öµ£¬ÈÃÕ½¶·½Ú×à¸ü¿ì¿ªÊ¼
+            foreach (var character in allUsableCharacter) {//ç»™ä¸€ä¸ªèµ·æ­¥å€¼ï¼Œè®©æˆ˜æ–—èŠ‚å¥æ›´å¿«å¼€å§‹
                 character.ATB = character.SPE * 10+100;
             }
 
@@ -52,7 +52,7 @@ namespace Nagopia {
         }
 
         IEnumerator<float> BattleCoroutine() {
-            #region ¸üĞÂATB²¢Ö´ĞĞ²Ù×÷
+            #region æ›´æ–°ATBå¹¶æ‰§è¡Œæ“ä½œ
             while (true) {
                 int memberCount = allUsableCharacter.Count;
                 bool flag = false;
@@ -86,12 +86,12 @@ namespace Nagopia {
         }
 
         /// <summary>
-        /// ¼ì²éÕ½¶·ÊÇ·ñ½áÊø£¬·µ»ØÖµÎªtrueÊ±Õ½¶·½áÊø£¬·µ»ØÖµÎªfalseÊ±Õ½¶·¼ÌĞø
+        /// æ£€æŸ¥æˆ˜æ–—æ˜¯å¦ç»“æŸï¼Œè¿”å›å€¼ä¸ºtrueæ—¶æˆ˜æ–—ç»“æŸï¼Œè¿”å›å€¼ä¸ºfalseæ—¶æˆ˜æ–—ç»§ç»­
         /// </summary>
         /// <returns></returns>
         private bool ValidateOver() {
             bool flag = false;
-            int count = enemyTeam.Count;//ÀíÂÛÉÏ»¹ÊÇÍæ¼ÒÓ®Ãæ´óÂï£¬¾ÍÏÈËãµĞÈËµÄ
+            int count = enemyTeam.Count;//ç†è®ºä¸Šè¿˜æ˜¯ç©å®¶èµ¢é¢å¤§å˜›ï¼Œå°±å…ˆç®—æ•Œäººçš„
             for(int i = 0; i < count; ++i) {
                 var chara = enemyTeam[i];
                 if (chara.HP > 0) {
@@ -99,8 +99,8 @@ namespace Nagopia {
                     break;
                 }
             }
-            if (flag) {//flagÎªÕæÊ±£¬µĞÈËÈ«Ãğ
-                win_flag = flag;//win_flag¸³ÖµÎªtrue
+            if (flag) {//flagä¸ºçœŸæ—¶ï¼Œæ•Œäººå…¨ç­
+                win_flag = flag;//win_flagèµ‹å€¼ä¸ºtrue
                 return flag;
             }
 
@@ -112,18 +112,39 @@ namespace Nagopia {
                     break;
                 }
             }
-            //ÕâÀïÖ®ËùÒÔ²»¼ì²éflag£¬ÒòÎªflagÎªtrueÊ±£¬´ú±íÍæ¼ÒÊä£¬´ËÊ±win_flagÎªfalse±íÊ¾Íæ¼ÒÊä¡£flagÎªfalseÊ±Ò²²»¸üĞÂwin_flag
+            //è¿™é‡Œä¹‹æ‰€ä»¥ä¸æ£€æŸ¥flagï¼Œå› ä¸ºflagä¸ºtrueæ—¶ï¼Œä»£è¡¨ç©å®¶è¾“ï¼Œæ­¤æ—¶win_flagä¸ºfalseè¡¨ç¤ºç©å®¶è¾“ã€‚flagä¸ºfalseæ—¶ä¹Ÿä¸æ›´æ–°win_flag
             return flag;
         }
 
+
         /// <summary>
-        /// ¸ù¾İ½ÇÉ«ËÙ¶È½øĞĞ½µĞòÅÅĞòµÄ±È½Ïº¯Êı
+        /// æ ¹æ®è§’è‰²é€Ÿåº¦è¿›è¡Œé™åºæ’åºçš„æ¯”è¾ƒå‡½æ•°
         /// </summary>
         /// <param name="c1"></param>
         /// <param name="c2"></param>
         /// <returns></returns>
         public static int SortBySpeed(IBattleCharacter c1,IBattleCharacter c2) {
             return -c1.SPE.CompareTo(c2.SPE);
+        }
+
+        public BattleInfo GetBattleInfo(IBattleCharacter myself) {
+            if (JudgePlayerEnemy[myself]) {//ç©å®¶æ–¹è·å¾—æˆ˜æ–—ä¿¡æ¯
+                BattleInfo battleInfo = new BattleInfo(playerTeam, playerTeam, enemyTeam, enemyTeam);
+                return battleInfo;
+            }
+            else {//ç©å®¶çš„å¯¹æ‰‹æ¥è·å¾—æˆ˜æ–—ä¿¡æ¯
+                BattleInfo battleInfo=new BattleInfo(enemyTeam, enemyTeam, playerTeam,playerTeam);
+                return battleInfo;
+            }
+        }
+
+        public void CharacterEscape(IBattleCharacter character) {
+            if (JudgePlayerEnemy[character]) {//ç©å®¶æ–¹è§’è‰²
+
+            }
+            else {//åœ°æ–¹è§’è‰²
+
+            }
         }
 
         private Dictionary<IBattleCharacter, bool> JudgePlayerEnemy = new Dictionary<IBattleCharacter, bool>();

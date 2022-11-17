@@ -35,15 +35,15 @@ namespace Nagopia {
         private void ConsiderEscape(ref BattleInfo battleInfo) {
             var myIndex = battleInfo.teammate_sortByPos.IndexOf(this);
             if (myIndex == 0) {//代表我是下一次受击的对象
-                GameDataBase g = new GameDataBase();
+                //GameDataBase g = new GameDataBase();
             }
             else {
 
             }
         }
 
-        public void UnderAttack(AttackEventData data) {
-
+        public void UnderAttack(AttackEventData data,out EscapeEvent escape) {
+            escape= null;
         }
 
         public void TeammateUnderAttack(AttackEventData data) {
@@ -67,6 +67,10 @@ namespace Nagopia {
                 default:
                     break;
             }
+        }
+
+        public uint CalculateAbility() {
+            return System.Convert.ToUInt32(this.HP + this.ATK * 5 + this.DEF * 5 + this.SPE * 10);
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace Nagopia
@@ -23,7 +23,7 @@ namespace Nagopia
 
         public override string ToString()
         {
-            return $"{attacker.Name} ¹¥»÷ {target.Name},Ôì³ÉÉËº¦ {Damage}µã";
+            return $"{attacker.Name} æ”»å‡» {target.Name},é€ æˆä¼¤å®³ {Damage}ç‚¹";
         }
 
     }

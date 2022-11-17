@@ -19,8 +19,10 @@ namespace Nagopia {
 
         void ThinkMove(BattleInfo battleInfo);
 
-        void UnderAttack(AttackEventData attackEvent);
+        void UnderAttack(AttackEventData attackEvent,out EscapeEvent escape);
 
         void TeammateUnderAttack(AttackEventData attackEvent);
+
+        uint CalculateAbility();
     }
 }

@@ -1,27 +1,42 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using MEC;
 namespace Nagopia
 {
     public class EventHandler:SingletonMonobehaviour<EventHandler>
     {
-        public void Awake()
-        {
+        public void Awake(){
             if (SingletonMonobehaviour<EventHandler>.Instance!=this)
             {
                 DestroyImmediate(this);
+                return;
             }
             DontDestroyOnLoad(this);
         }
 
         /// <summary>
-        /// ´¦Àí¹¥»÷ÊÂ¼ş£¬²¢¼ì²é¹¥»÷ÊÂ¼şÊÇ·ñ´¥·¢ÆäËüÌØÊâÊÂ¼ş
+        /// å¤„ç†æ”»å‡»äº‹ä»¶ï¼Œå¹¶æ£€æŸ¥æ”»å‡»äº‹ä»¶æ˜¯å¦è§¦å‘å…¶å®ƒç‰¹æ®Šäº‹ä»¶
         /// </summary>
         /// <param name="data"></param>
-        public void AttackEvent(AttackEventData data)
-        {
-
+        public void AttackEvent(AttackEventData data){
+            if(attackCoroutine!= null) {
+                Timing.KillCoroutines(attackCoroutine);
+            }
+            attackCoroutine=Timing.RunCoroutine(AttackEventCoroutine(data));
         }
+
+        IEnumerator<float>AttackEventCoroutine(AttackEventData data) {
+            
+            yield return 0;
+        }
+
+        public void CharacterEscape(ref EscapeEvent escape) {
+            battleManager.CharacterEscape(escape.character);
+        }
+
+        private CoroutineHandle attackCoroutine;
 
         private BattleManager battleManager = SingletonMonobehaviour<BattleManager>.Instance;
     }

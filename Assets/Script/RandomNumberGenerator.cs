@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class RandomNumberGenerator
@@ -57,6 +58,13 @@ public class RandomNumberGenerator
             SwapData<float>(ref min,ref max);
         }
         return Random.Range(min, max);
+    }
+
+    public static double Averaeg_GetRandomNumber(double min,double max) {
+        if (min > max) {
+            SwapData<double>(ref min, ref max);
+        }
+        return Random.Range((float)min, (float)max);
     }
 
     /// <summary>

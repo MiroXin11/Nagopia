@@ -1,19 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class WarriorAnimationControl : MonoBehaviour
-{
-    Animator animator;
-    // Start is called before the first frame update
-    void Start()
-    {
-        animator= GetComponent<Animator>();
+namespace Nagopia {
+    public class WarriorAnimationControl : CharacterAnimatorController {
+        public override void Attack(Action onCompleCallback = null) {
+            animator.Play("Slashing");
+            this.AttackEndCallback= onCompleCallback;
+        }
     }
-
-    // Update is called once per frame
-    //void Update()
-    //{
-        
-    //}
 }

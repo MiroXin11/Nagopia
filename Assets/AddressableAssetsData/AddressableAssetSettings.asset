@@ -40,6 +40,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 89e7c34184d435c4188722db401ec67c, type: 2}
   - {fileID: 11400000, guid: fc349b151c54f3f4a9b636d519db544b, type: 2}
   - {fileID: 11400000, guid: 7248703b90044034985dedbf9ecd128c, type: 2}
+  - {fileID: 11400000, guid: c0f35aea0c3f14e46bde61b0a36c5513, type: 2}
+  - {fileID: 11400000, guid: 74d044d00d637634ca0a2d38a47d78a5, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -85,6 +87,7 @@ MonoBehaviour:
     - ItemTemplate
     - CharacterTemplate
     - GameConfig
+    - EnemyTemplate
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 2a974d7443644e8439c45a2ef17362ee, type: 2}

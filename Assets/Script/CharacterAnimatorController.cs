@@ -1,14 +1,16 @@
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 
 namespace Nagopia {
     public class CharacterAnimatorController : MonoBehaviour {
         public void Awake() {
-            animator=gameObject.GetComponent<Animator>();
+            animator = gameObject.GetComponent<Animator>();
+            this.spriteRenderers = gameObject.GetComponentsInChildren<SpriteRenderer>();
         }
 
         [Button]
@@ -22,7 +24,7 @@ namespace Nagopia {
         }
 
         [Button]
-        public virtual void Attack(Action onCompleCallback=null) { }
+        public virtual void Attack(Action onCompleteCallback = null) { }
 
         public void OnAttackEnd() {
             ResetAnimation();
@@ -30,9 +32,9 @@ namespace Nagopia {
         }
 
         [Button]
-        public virtual void Hurt(Action onCompledCallback=null) {
+        public virtual void Hurt(Action onCompleteCallback = null) {
             animator.Play("Hurt");
-            HurtEndCallback=onCompledCallback;
+            HurtEndCallback = onCompleteCallback;
             //HurtEndCallback = delegate { Debug.Log("test"); };
         }
 
@@ -42,11 +44,33 @@ namespace Nagopia {
             //Debug.Log("message");
         }
 
+        [Button]
+        public virtual void Die(Action CompleteCallback = null) {
+            animator.Play("Dying");
+            DieEndCallback = CompleteCallback;
+        }
+
+        protected virtual void DieEnd() {
+            DieEndCallback?.Invoke();
+        }
+
+        [Button]
+        public virtual void Fade(float time = 0.5f,System.Action completeCallback=null) {
+            foreach (var item in spriteRenderers) {
+                item.DOFade(0f, time).SetEase(Ease.OutExpo).OnComplete(()=>completeCallback?.Invoke());
+            }
+        }
+
         protected Action AttackEndCallback = null;
 
         protected Action HurtEndCallback= null;
 
+        protected Action DieEndCallback= null;
+
         [SerializeField]
         protected Animator animator;
+
+        private SpriteRenderer[] spriteRenderers;
+        //private List<SpriteRenderer>spriteRenderers= new List<SpriteRenderer>();
     }
 }

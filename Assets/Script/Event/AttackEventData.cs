@@ -5,15 +5,18 @@ namespace Nagopia
 {
     public class AttackEventData : BaseEvent
     {
-        public AttackEventData(ref IBattleCharacter attacker,ref IBattleCharacter target,int damage,ref BattleInfo battleInfo)
+        public AttackEventData(ref IBattleCharacter attacker,ref IBattleCharacter target,int damage,ref BattleInfo battleInfo,GameDataBase.AttackAnimationType animationType=GameDataBase.AttackAnimationType.CLOSE)
         {
             this.attacker = attacker;
             this.target = target;
             this.Damage= damage;
             this.battleInfo= battleInfo;
+            this.animationType= animationType;
         }
 
         public IBattleCharacter attacker;
+
+        public GameDataBase.AttackAnimationType animationType;
 
         public IBattleCharacter target;
 
@@ -23,7 +26,7 @@ namespace Nagopia
 
         public override string ToString()
         {
-            return $"{attacker.Name} 攻击 {target.Name},造成伤害 {Damage}点";
+            return $"{attacker.Name} 攻击 {target.Name},造成伤害 {Damage}点,{target.Name} 剩余 {target.HP}点hp";
         }
 
     }

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -22,6 +22,7 @@ namespace Nagopia {
             InitializeConfig();
             InitializeItem();
             InitializeProfTemplate();
+            InitializeEnemyTemplate();
             hasIni = true;
         }
 #if UNITY_EDITOR
@@ -68,6 +69,14 @@ namespace Nagopia {
             GetAllEquipmentTemplate();
         }
 
+        private static void InitializeEnemyTemplate() {
+            var array = Enum.GetValues(typeof(GameDataBase.EnemyRarity));
+            foreach (var item in array) {
+                EnemyTemplates.Add((GameDataBase.EnemyRarity)item, new List<EnemyTemplate>());
+            }
+            GetAllEnemyTemplate();
+        }
+
         /// <summary>
         /// 需要在运行模式下才能正常执行
         /// </summary>
@@ -92,6 +101,29 @@ namespace Nagopia {
             }
         }
 
+        /// <summary>
+        /// 需在运行模式下才能正常执行
+        /// </summary>
+        private static void GetAllEnemyTemplate() {
+            var handle = Addressables.LoadAssetsAsync<EnemyTemplate>("EnemyTemplate", null);
+            handle.Completed += (handle) => {
+                var res=handle.Result;
+                foreach (var item in res) {
+                    EnemyTemplates[item.rank].Add(item);
+                }
+            };
+        }
+
+        public static CharaProfTemplate GetCharaTemplate(string name) {
+            var templates = CharaTemplates.Values.ToList();
+            CharaProfTemplate template = null;
+            foreach (var item in templates) {
+                template=item.Find((x)=>x.name== name);
+                if(template!=null) return template;
+            }
+            return template;
+        }
+
         public static CharaProfTemplate GetCharaTemplate(GameDataBase.CharacterProfession[]requiredProfs) {
             List<CharaProfTemplate> wanted = new List<CharaProfTemplate>();
             foreach (var item in requiredProfs) {
@@ -106,6 +138,25 @@ namespace Nagopia {
             return wanted[0];
         }
 
+        /// <summary>
+        /// 根据装备的名字来筛选出装备
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static EquipmentTemplate GetEquipmentTemplate(string name) {
+            var equipmentList = ItemTemplates[ItemType.EQUIPMENT];
+            var targets=equipmentList.FindAll((item)=>item.name== name);
+            if(targets.Count==0) return null;
+            return targets[RandomNumberGenerator.Average_GetRandomNumber(0, targets.Count,false)] as EquipmentTemplate;
+        }
+
+        /// <summary>
+        /// 根据筛选条件来获得装备
+        /// </summary>
+        /// <param name="rarity">要获得的装备的稀有度</param>
+        /// <param name="usable">可使用该装备的职业</param>
+        /// <param name="type">装备的类型</param>
+        /// <returns>搜索出来的装备，如果存在多个指定条件的装备则会随机返回</returns>
         public static EquipmentTemplate GetEquipmentTemplate(GameDataBase.ItemRarity rarity, GameDataBase.CharacterProfession[] usable, GameDataBase.EquipmentType type) {
             var EquipmentList = ItemTemplates[ItemType.EQUIPMENT];
             var final = EquipmentList.Where((template) => { return template.ItemRarity == rarity; })
@@ -121,9 +172,38 @@ namespace Nagopia {
             int index = 0;
             int count = final.Count();
             if (count > 1) {
-                index = RandomNumberGenerator.Average_GetRandomNumber(0, count);
+                index = RandomNumberGenerator.Average_GetRandomNumber(0, count,false);
             }
             return final.ElementAt(index) as EquipmentTemplate;
+        }
+
+        /// <summary>
+        /// 根据名字获得敌人模板
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static EnemyTemplate GetEnemyTemplate(string name) {
+            var lists = EnemyTemplates.Values;
+            foreach (var item in lists) {
+                var template=item.Find((x)=>x.name== name);
+                if (template != null) 
+                    return template;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 获得敌人模板，若存在复数选项，则随机返回一个
+        /// </summary>
+        /// <param name="rarity"></param>
+        /// <param name="duty"></param>
+        /// <returns></returns>
+        public static EnemyTemplate GetEnemyTemplate(GameDataBase.EnemyRarity rarity,GameDataBase.EnemyDuty duty) {
+            var list = EnemyTemplates[rarity];
+            var res=list.FindAll((x)=>x.duty== duty);
+            if(res.Count==0)
+                return null;
+            return res[RandomNumberGenerator.Average_GetRandomNumber(0, res.Count, false)];
         }
 
         public enum CharacterProfession {
@@ -237,6 +317,11 @@ namespace Nagopia {
             CURE,
         }
 
+        public enum AttackAnimationType {
+            CLOSE=1,
+            REMOTE=2,
+        }
+
         public static byte GameStage = 1;
 
         [NonSerialized,OdinSerialize]
@@ -253,6 +338,7 @@ namespace Nagopia {
         private static List<double> MentalBuffParams;
 
         private static readonly Dictionary<GameDataBase.CharacterProfession, List<CharaProfTemplate>> CharaTemplates = new Dictionary<CharacterProfession, List<CharaProfTemplate>>();
+        private static readonly Dictionary<GameDataBase.EnemyRarity, List<EnemyTemplate>> EnemyTemplates = new Dictionary<EnemyRarity, List<EnemyTemplate>>(); 
         private static readonly Dictionary<GameDataBase.ItemType, List<BaseItemTemplate>> ItemTemplates = new Dictionary<ItemType, List<BaseItemTemplate>>();
         //private static readonly Dictionary<GameDataBase.CharacterProfession, CharacterCurveTemple> ProfAbiTemplates = new Dictionary<CharacterProfession, CharacterCurveTemple>();
     }

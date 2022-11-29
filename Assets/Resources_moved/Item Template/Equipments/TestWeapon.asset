@@ -30,6 +30,9 @@ MonoBehaviour:
     - Name: equipmentType
       Entry: 3
       Data: 3
+    - Name: prefab
+      Entry: 6
+      Data: 
     - Name: abilities
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[Nagopia.EquipmentAbility, Assembly-CSharp]],

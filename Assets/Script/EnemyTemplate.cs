@@ -1,90 +1,105 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System;
+using Sirenix.Serialization;
+
 namespace Nagopia {
     public class EnemyTemplate : SerializedScriptableObject {
 
-        [Tooltip("µĞÈËµÄ·Ö¼¶")]
+        [Tooltip("æ•Œäººçš„åˆ†çº§")]
+        [HorizontalGroup("a")]
         public readonly GameDataBase.EnemyRarity rank;
 
-        [Tooltip("½ÇÉ«µÄ¶¨Î»£¬Ó°Ïì¹¥»÷Âß¼­")]
+        [Tooltip("è§’è‰²çš„å®šä½ï¼Œå½±å“æ”»å‡»é€»è¾‘")]
+        [HorizontalGroup("a")]
         public readonly GameDataBase.EnemyDuty duty;
 
+        [PreviewField(Alignment =ObjectFieldAlignment.Left)]
+        [NonSerialized,OdinSerialize]
+        public GameObject prefab;
+
         /// <summary>
-        /// ÑªÁ¿µÄ±¶ÂÊ
+        /// è¡€é‡çš„å€ç‡
         /// </summary>
         [MinValue(0)]
         [BoxGroup("HP")]
         [HorizontalGroup("HP/hori")]
-        [Tooltip("ÑªÁ¿µÄÔö³¤±¶ÂÊ")]
+        [Tooltip("è¡€é‡çš„å¢é•¿å€ç‡")]
         public readonly float HP_Rate;
 
         [MinValue(0)]
         [BoxGroup("HP")]
         [HorizontalGroup("HP/hori")]
-        [Tooltip("ÑªÁ¿µÄ»ù´¡Öµ")]
+        [Tooltip("è¡€é‡çš„åŸºç¡€å€¼")]
         /// <summary>
-        /// ¹¥»÷Á¦µÄ»ù´¡Öµ£¬ÒÔ×î³õ½×¶ÎµÄÎª»ù×¼
+        /// æ”»å‡»åŠ›çš„åŸºç¡€å€¼ï¼Œä»¥æœ€åˆé˜¶æ®µçš„ä¸ºåŸºå‡†
         /// </summary>
         public readonly float BasisHP;
 
         /// <summary>
-        /// ¹¥»÷Á¦µÄ±¶ÂÊ
+        /// æ”»å‡»åŠ›çš„å€ç‡
         /// </summary>
         [MinValue(0)]
         [BoxGroup("ATK")]
         [HorizontalGroup("ATK/hori")]
-        [Tooltip("¹¥»÷Á¦µÄÔö³¤±¶ÂÊ")]
+        [Tooltip("æ”»å‡»åŠ›çš„å¢é•¿å€ç‡")]
         public readonly float ATK_Rate;
 
         /// <summary>
-        /// ¹¥»÷Á¦µÄ»ù´¡Öµ
+        /// æ”»å‡»åŠ›çš„åŸºç¡€å€¼
         /// </summary>
         [MinValue(0)]
         [BoxGroup("ATK")]
         [HorizontalGroup("ATK/hori")]
-        [Tooltip("¹¥»÷Á¦µÄ»ù´¡Öµ")]
+        [Tooltip("æ”»å‡»åŠ›çš„åŸºç¡€å€¼")]
         public readonly float BasisATK;
 
         /// <summary>
-        /// ·ÀÓùÁ¦µÄ±¶ÂÊ
+        /// é˜²å¾¡åŠ›çš„å€ç‡
         /// </summary>
         [MinValue(0)]
         [BoxGroup("DEF")]
         [HorizontalGroup("DEF/hori")]
-        [Tooltip("·ÀÓùÁ¦µÄ±¶ÂÊ")]
+        [Tooltip("é˜²å¾¡åŠ›çš„å€ç‡")]
         public readonly float DEF_Rate;
 
         /// <summary>
-        /// ·ÀÓùÁ¦µÄ»ù´¡Öµ
+        /// é˜²å¾¡åŠ›çš„åŸºç¡€å€¼
         /// </summary>
         [MinValue(0)]
         [BoxGroup("DEF")]
         [HorizontalGroup("DEF/hori")]
-        [Tooltip("·ÀÓùÁ¦µÄ»ù´¡Öµ")]
+        [Tooltip("é˜²å¾¡åŠ›çš„åŸºç¡€å€¼")]
         public readonly float BasisDEF;
 
         /// <summary>
-        /// ËÙ¶ÈµÄ±¶ÂÊ
+        /// é€Ÿåº¦çš„å€ç‡
         /// </summary>
         [MinValue(0)]
         [BoxGroup("SPE")]
         [HorizontalGroup("SPE/hori")]
-        [Tooltip("ËÙ¶ÈµÄÔö³¤±¶ÂÊ")]
+        [Tooltip("é€Ÿåº¦çš„å¢é•¿å€ç‡")]
         public readonly float SPE_Rate;
 
         /// <summary>
-        /// ËÙ¶ÈµÄ»ù´¡Öµ
+        /// é€Ÿåº¦çš„åŸºç¡€å€¼
         /// </summary>
         [MinValue(0)]
         [BoxGroup("SPE")]
         [HorizontalGroup("SPE/hori")]
-        [Tooltip("ËÙ¶ÈµÄ»ù´¡Öµ")]
+        [Tooltip("é€Ÿåº¦çš„åŸºç¡€å€¼")]
         public readonly float BasisSPE;
 
         [MinValue(0)]
         [BoxGroup("Others")]
         public readonly int Position;
+
+        [ShowInInspector]
+        [NonSerialized,OdinSerialize]
+        [BoxGroup("Mental")]
+        [Tooltip("ç²¾ç¥å±æ€§çš„èŒƒå›´ï¼Œå¦‚æœæœªæ·»åŠ åœ¨è¯¥å­—å…¸çš„å±æ€§ï¼Œå°†æŒ‰ç…§GameConfigä¸­è®¾ç½®çš„æœ€å¤§å€¼ä¸æœ€å°å€¼èŒƒå›´æ¥éšæœºç”Ÿæˆ")]
+        public Dictionary<GameDataBase.MentalType, MinMaxPair<byte>> MentalRange = new Dictionary<GameDataBase.MentalType, MinMaxPair<byte>>();
     }
 }

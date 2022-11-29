@@ -15,42 +15,74 @@ public class RandomNumberGenerator
         probability = Clamp01(probability);
         int rng = Average_GetRandomNumber(0, int.MaxValue);
         int Comparer = System.Convert.ToInt32(probability * int.MaxValue);
+        //Debug.Log($"rng={rng},Compare={Comparer}");
         return rng < Comparer;
     }
 
     private static double[] statistic=>Nagopia.GameDataBase.Config.Equipment_RPair_Probability;
 
-    public static int Average_GetRandomNumber(int min,int max) {
+    /// <summary>
+    /// 获得一个int类型的随机数
+    /// </summary>
+    /// <param name="min">最小值</param>
+    /// <param name="max">最大值</param>
+    /// <param name="includeRight">是否包含最大值，默认包含</param>
+    /// <returns></returns>
+    public static int Average_GetRandomNumber(int min,int max,bool includeRight=true) {
         if (min > max) {
             SwapData<int>(ref min, ref max);
         }
-        if (max == min) {
+        if (max == min&&max!=int.MaxValue) {
             max += 1;
         }
-        return Random.Range(min, max);
+        if(includeRight&&max!=int.MaxValue)
+            return Random.Range(min, max+1);
+        else
+            return Random.Range(min, max);
     }
 
-    public static byte Average_GetRandomNumber(byte min,byte max) {
+    /// <summary>
+    /// 获得一个byte类型的随机数
+    /// </summary>
+    /// <param name="min">最小值</param>
+    /// <param name="max">最大值</param>
+    /// <param name="includeRight">生成的随机数是否包含右边界，默认包含</param>
+    /// <returns></returns>
+    public static byte Average_GetRandomNumber(byte min,byte max,bool includeRight=true) {
         if (min > max) {
             SwapData<byte>(ref min, ref max);
         }
-        if (max == min) {
+        if (max == min&&max!=byte.MaxValue) {
             max += 1;
         }
-        int val = Random.Range(min, max);
+        int val = 0;
+        if (includeRight&&max!=byte.MaxValue)
+            val = Random.Range(min, max+1);
+        else
+            val = Random.Range(min, max);
         return (byte)val;
     }
 
-    public static uint Average_GetRandomNumber(uint min,uint max) {
+    /// <summary>
+    /// 获得一个uint类型的随机数
+    /// </summary>
+    /// <param name="min">最小值</param>
+    /// <param name="max">最大值</param>
+    /// <param name="includeRight">是否包含最大值</param>
+    /// <returns></returns>
+    public static uint Average_GetRandomNumber(uint min,uint max,bool includeRight=true) {
         int mi = System.Convert.ToInt32(min);
         int ma = System.Convert.ToInt32(max);
         if (mi > ma) {
             SwapData<int>(ref mi, ref ma);
         }
-        if (mi == ma) {
+        if (mi == ma && ma != int.MaxValue) {
             ma += 1;
         }
-        return System.Convert.ToUInt32(Random.Range(mi, ma));
+        if (includeRight && max != int.MaxValue)
+            return System.Convert.ToUInt32(Random.Range(mi, ma + 1));
+        else
+            return System.Convert.ToUInt32(Random.Range(mi, ma));
     }
 
     public static float Average_GetRandomNumber(float min,float max) {
@@ -60,7 +92,7 @@ public class RandomNumberGenerator
         return Random.Range(min, max);
     }
 
-    public static double Averaeg_GetRandomNumber(double min,double max) {
+    public static double Average_GetRandomNumber(double min,double max) {
         if (min > max) {
             SwapData<double>(ref min, ref max);
         }

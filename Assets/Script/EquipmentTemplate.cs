@@ -28,9 +28,16 @@ namespace Nagopia {
         [System.NonSerialized, OdinSerialize, ShowInInspector]
         [DisplayAsString]
         [BoxGroup("Equipment",showLabel:false)]
+        [HorizontalGroup("Equipment/a")]
         [LabelText("装备类型")]
         [Space()]
         protected GameDataBase.EquipmentType equipmentType = GameDataBase.EquipmentType.INVALID;
+
+        [System.NonSerialized,OdinSerialize,ShowInInspector]
+        [BoxGroup("Equipment",showLabel:false)]
+        [HorizontalGroup("Equipment/a")]
+        [PreviewField]
+        public readonly Sprite prefab;
 
         [HideInInspector]
         public EquipmentAbility[] Abilities { get { return this.abilities.ToArray(); } }

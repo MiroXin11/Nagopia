@@ -1,4 +1,5 @@
-using JetBrains.Annotations;
+ï»¿using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,10 @@ namespace Nagopia
             this.Position = template.Position;
             this.rank = template.rank;
             this.duty = template.duty;
+            this.avatar = GameObject.Instantiate(template.prefab);
+            this.animatorController = avatar.GetComponent<CharacterAnimatorController>();
             GenerateAbility(ref template);
-            GeneratetMind();
+            GeneratetMind(ref template);
         }
         public int Position;
 
@@ -28,22 +31,22 @@ namespace Nagopia
         public int level;
 
         /// <summary>
-        /// Áìµ¼Á¦
+        /// é¢†å¯¼åŠ›
         /// </summary>
         public byte LEA;
 
         /// <summary>
-        /// ºÏ×÷ÄÜÁ¦
+        /// åˆä½œèƒ½åŠ›
         /// </summary>
         public byte COO;
 
         /// <summary>
-        /// Õò¾²¶È
+        /// é•‡é™åº¦
         /// </summary>
         public byte CAL;
 
         /// <summary>
-        /// µÀµÂÖµ
+        /// é“å¾·å€¼
         /// </summary>
         public byte MOR;
 
@@ -52,6 +55,10 @@ namespace Nagopia
         public GameDataBase.EnemyDuty duty;
 
         public string name;
+
+        public GameObject avatar;
+
+        public CharacterAnimatorController animatorController;
 
         private void GenerateAbility(ref EnemyTemplate template)
         {
@@ -62,13 +69,40 @@ namespace Nagopia
             this.currentHP = this.MaxHP;
         }
 
-        private void GeneratetMind()
+        private void GeneratetMind(ref EnemyTemplate template)
         {
-            byte minMental = GameDataBase.Config.MinMental, maxMental = GameDataBase.Config.MaxMental;
-            this.LEA = RandomNumberGenerator.Average_GetRandomNumber(minMental,maxMental);
-            this.CAL = RandomNumberGenerator.Average_GetRandomNumber(minMental,maxMental);
-            this.COO = RandomNumberGenerator.Average_GetRandomNumber(minMental, maxMental);
-            this.MOR = RandomNumberGenerator.Average_GetRandomNumber(minMental, maxMental);
+            var dict = template.MentalRange;
+            byte minMental = GameDataBase.Config.MinMental;
+            byte maxMental = GameDataBase.Config.MaxMental;
+            foreach (GameDataBase.MentalType item in mentalArray) {
+                if(dict.TryGetValue(item,out var value)) {
+                    SetMental(item, RandomNumberGenerator.Average_GetRandomNumber(value.min, value.max));
+                }
+                else {
+                    SetMental(item,RandomNumberGenerator.Average_GetRandomNumber(minMental, maxMental));
+                }
+            }
         }
+
+        private void SetMental(GameDataBase.MentalType type,byte value) {
+            switch (type) {
+                case GameDataBase.MentalType.LEA:
+                    this.LEA = value;
+                    break;
+                case GameDataBase.MentalType.COO:
+                    this.COO= value;
+                    break;
+                case GameDataBase.MentalType.CAL:
+                    this.CAL = value;
+                    break;
+                case GameDataBase.MentalType.MOR:
+                    this.MOR= value;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private static Array mentalArray = Enum.GetValues(typeof(GameDataBase.MentalType));
     }
 }

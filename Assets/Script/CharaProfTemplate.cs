@@ -10,6 +10,7 @@ namespace Nagopia {
         [NonSerialized, OdinSerialize]
         [ShowInInspector]
         [BoxGroup("Base")]
+        [HorizontalGroup("Base/a")]
         [OnValueChanged("CheckEquipment")]
         private GameDataBase.CharacterProfession adaptProf;
 
@@ -19,7 +20,9 @@ namespace Nagopia {
         [NonSerialized, OdinSerialize]
         [ShowInInspector]
         [BoxGroup("Base")]
+        [HorizontalGroup("Base/a")]
         [PropertyRange(0.0f, 1.00f)]
+        [Tooltip("出现的几率")]
         private float probability;
 
         [HideInInspector]
@@ -28,6 +31,16 @@ namespace Nagopia {
         [ShowInInspector]
         [NonSerialized, OdinSerialize]
         [BoxGroup("Base")]
+        [HorizontalGroup("Base/b")]
+        [PreviewField(Alignment = ObjectFieldAlignment.Left)]
+        public GameObject prefab;
+
+        [ShowInInspector]
+        [NonSerialized, OdinSerialize]
+        [BoxGroup("Base")]
+        [HorizontalGroup("Base/b")]
+        [InlineProperty]
+        [LabelWidth(120)]
         public MinMaxPair<int> PossiblePosition;
 
         [ShowInInspector]

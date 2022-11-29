@@ -4,10 +4,10 @@ using UnityEngine;
 namespace Nagopia {
     public class BattleInfo{
         public BattleInfo(List<IBattleCharacter> teamPos=null,List<IBattleCharacter> teamSpe = null,List<IBattleCharacter>enePos=null,List<IBattleCharacter>eneSpe=null) {
-            teammate_sortByPos = new List<IBattleCharacter>(teamPos);
-            teammate_sortBySPE = new List<IBattleCharacter>(teamSpe);
-            enemy_sortByPos = new List<IBattleCharacter>(enePos);
-            enemy_sortBySPE = new List<IBattleCharacter>(eneSpe);
+            teammate_sortByPos = teamPos;
+            teammate_sortBySPE = teamSpe;
+            enemy_sortByPos = enePos;
+            enemy_sortBySPE = eneSpe;
         }
 
         public List<IBattleCharacter> teammate_sortByPos;

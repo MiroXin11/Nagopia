@@ -7,15 +7,27 @@ namespace Nagopia {
 
     [System.Serializable]
     public class CharacterData {
-        public CharacterData(ref CharaProfTemplate template,ref int level) {
+        public CharacterData(ref CharaProfTemplate template,ref int level,List<RelationData>initialRelation=null) {
             this.profession = template.AdaptProf;
             this.Position = RandomNumberGenerator.Average_GetRandomNumber(template.PossiblePosition.min, template.PossiblePosition.max);
             this.Level = level;
             GenerateAbility(ref template,ref level);
             GenerateMental(ref template);
+            obj = GameObject.Instantiate(template.prefab);
+            animatorController = obj.GetComponent<CharacterAnimatorController>();
+            if (!ReferenceEquals(initialRelation, null)) {
+                foreach (var item in initialRelation) {
+                    item.source = this;
+                }
+                this.relationData.AddRange(initialRelation);
+            }
         }
 
-        public string name;
+        public string name="";
+
+        public GameObject obj;
+
+        public CharacterAnimatorController animatorController;
 
         /// <summary>
         /// 角色的血量成长曲线
@@ -255,12 +267,25 @@ namespace Nagopia {
             equipAbi = equipAbi + (!ReferenceEquals(shoes, null) ? shoes.CalculateAbility(type) : 0);
             return equipAbi;
         }
+
+        public int GetRelationData(CharacterData data) {
+            var relation = this.relationData.Find((x) => x.target == data);
+            return relation.relation;
+        }
+
+        private List<RelationData> relationData = new List<RelationData>();
     }
 
     /// <summary>
     /// 角色的关系数据
     /// </summary>
     public class RelationData {
+
+        public RelationData(CharacterData source=null,CharacterData target=null,sbyte relation = 0) {
+            this.relation = relation;
+            this.source = source;
+            this.target = target;
+        }
 
         /// <summary>
         /// 起点
@@ -273,9 +298,11 @@ namespace Nagopia {
         public CharacterData target;
 
         /// <summary>
-        /// 关系值，范围为-128到127，数值越大关系越好
+        /// 关系值，范围由GameConfig中的具体参数决定，数值越大关系越好
         /// 为正数时，二者关系偏正面；为负数时，二者关系偏负面
         /// </summary>
-        public sbyte relation { get; set; }
+        public sbyte Relation { get => relation; set { this.relation = (sbyte)Mathf.Clamp(value, sbyte.MinValue, sbyte.MaxValue); } }
+
+        public sbyte relation;
     }
 }

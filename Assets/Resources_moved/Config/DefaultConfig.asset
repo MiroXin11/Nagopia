@@ -13,14 +13,104 @@ MonoBehaviour:
   m_Name: DefaultConfig
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
-    SerializedBytes: 01011b000000450071007500690070006d0065006e0074005f00520050006100690072005f00500072006f0062006100620069006c006900740079002f000000000119000000530079007300740065006d002e0044006f00750062006c0065005b005d002c0020006d00730063006f0072006c006900620000000000080b00000008000000000000000000f03f666666666666e63f000000000000e03f333333333333d33f9a9999999999c93f9a9999999999b93f9a9999999999a93f9a9999999999993ffca9f1d24d62703fb81e85eb51b88e3ffca9f1d24d62403f051f010f0000004d006f00760065006400520065007100750069007200650041005400420000007a441701080000004d0069006e004c006500760065006c00010000001701080000004d00610078004c006500760065006c006400000017010b0000004d0069006e0050006f0073006900740069006f006e000100000017010b0000004d006100780050006f0073006900740069006f006e00e70300001101090000004d00610078004d0065006e00740061006c00141101090000004d0069006e004d0065006e00740061006c000111010d0000004d00610078005400650061006d004d0065006d0062006500720005
+    SerializedFormat: 2
+    SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: Equipment_RPair_Probability
+      Entry: 7
+      Data: 0|System.Double[], mscorlib
+    - Name: 
+      Entry: 14
+      Data: 11
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 4
+      Data: 0.7
+    - Name: 
+      Entry: 4
+      Data: 0.5
+    - Name: 
+      Entry: 4
+      Data: 0.3
+    - Name: 
+      Entry: 4
+      Data: 0.2
+    - Name: 
+      Entry: 4
+      Data: 0.1
+    - Name: 
+      Entry: 4
+      Data: 0.05
+    - Name: 
+      Entry: 4
+      Data: 0.025
+    - Name: 
+      Entry: 4
+      Data: 0.004
+    - Name: 
+      Entry: 4
+      Data: 0.015
+    - Name: 
+      Entry: 4
+      Data: 0.0005
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: MovedRequireATB
+      Entry: 4
+      Data: 1000
+    - Name: MinLevel
+      Entry: 3
+      Data: 1
+    - Name: MaxLevel
+      Entry: 3
+      Data: 100
+    - Name: MinPosition
+      Entry: 3
+      Data: 1
+    - Name: MaxPosition
+      Entry: 3
+      Data: 999
+    - Name: MaxMental
+      Entry: 3
+      Data: 20
+    - Name: MinMental
+      Entry: 3
+      Data: 1
+    - Name: MentalBuffFloor
+      Entry: 4
+      Data: 0.5
+    - Name: MentalBuffCeiling
+      Entry: 4
+      Data: 1.5
+    - Name: MaxTeamMember
+      Entry: 3
+      Data: 5
+    - Name: EscapeEventBaseProbability
+      Entry: 4
+      Data: 0.059999998658895493
+    - Name: SubstitudeEventBaseProbability
+      Entry: 4
+      Data: 1
+    - Name: CharacterDiedProbability
+      Entry: 4
+      Data: 0.15
+    - Name: SingleCharaLowHPParam
+      Entry: 4
+      Data: 0.2
+    - Name: PlayerTeamLowHPParam
+      Entry: 4
+      Data: 0.4
   GameSpeed: 1
   BattleSysUpdateTimesPerSec: 120
   ATBUpPerSec: 150

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Nagopia {
     public abstract class Equipment:BaseItem {
 
-        public Equipment(ref ProfPair[]profPairs,GameDataBase.ItemRarity rarity=GameDataBase.ItemRarity.RANDOM) {
+        public Equipment(ref ProfPair[]profPairs,Sprite sprite,GameDataBase.ItemRarity rarity=GameDataBase.ItemRarity.RANDOM) {
             foreach (var item in profPairs) {
                 if (item.available) {
                     this.permittedProf.Add(item.prof);
@@ -17,6 +17,7 @@ namespace Nagopia {
             else {
                 this.rarity = rarity;
             }
+            this.sprite= sprite;
         }
 
         public override GameDataBase.ItemType ItemType {
@@ -116,6 +117,8 @@ namespace Nagopia {
         /// 装备总的稀有度，会因为词条的附加而提升
         /// </summary>
         public ushort rarity_Total;
+
+        public Sprite sprite;
     }
     public class rarityPair {
         public rarityPair(byte rarity,int value) {

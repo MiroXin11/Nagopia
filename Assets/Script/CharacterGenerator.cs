@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,7 +15,7 @@ namespace Nagopia {
             }
             var template = GameDataBase.GetCharaTemplate(required);
             CharacterData data = new CharacterData(ref template,ref level);
-            foreach (var item in template.AvalibleHead) {//Ìí¼ÓÍ·²¿×°±¸
+            foreach (var item in template.AvalibleHead) {//æ·»åŠ å¤´éƒ¨è£…å¤‡
                 if (RandomNumberGenerator.Happened(item.probability)) {
                     var eqTemplate = item.Equipment as EquipmentTemplate;
                     var HeadEquipment = EquipmentGenerator.GenerateEquipment(ref eqTemplate);
@@ -23,7 +23,7 @@ namespace Nagopia {
                     break;
                 }
             }
-            foreach (var item in template.AvalibleCloth) {//Ìí¼ÓÒÂ·ş
+            foreach (var item in template.AvalibleCloth) {//æ·»åŠ è¡£æœ
                 if (RandomNumberGenerator.Happened(item.probability)) {
                     var eqTemplate = item.Equipment as EquipmentTemplate;
                     var ClothEquipment = EquipmentGenerator.GenerateEquipment(ref eqTemplate);
@@ -31,7 +31,7 @@ namespace Nagopia {
                     break;
                 }
             }
-            foreach (var item in template.AvalibleShoes) {//Ìí¼ÓĞ¬×Ó
+            foreach (var item in template.AvalibleShoes) {//æ·»åŠ é‹å­
                 if (RandomNumberGenerator.Happened(item.probability)) {
                     var eqTemplate = item.Equipment as EquipmentTemplate;
                     var ShoesEquipment = EquipmentGenerator.GenerateEquipment(ref eqTemplate);
@@ -39,7 +39,7 @@ namespace Nagopia {
                     break;
                 }
             }
-            foreach (var item in template.AvalibleWeapon) {//Ìí¼ÓÎäÆ÷
+            foreach (var item in template.AvalibleWeapon) {//æ·»åŠ æ­¦å™¨
                 if (RandomNumberGenerator.Happened(item.probability)) {
                     var eqTemplate = item.Equipment as EquipmentTemplate;
                     var WeaponTemplate = EquipmentGenerator.GenerateEquipment(ref eqTemplate);

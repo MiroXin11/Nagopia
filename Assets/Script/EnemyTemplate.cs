@@ -16,9 +16,18 @@ namespace Nagopia {
         [HorizontalGroup("a")]
         public readonly GameDataBase.EnemyDuty duty;
 
+        [Tooltip("经验比例")]
+        public float exp_rate;
+
         [PreviewField(Alignment =ObjectFieldAlignment.Left)]
         [NonSerialized,OdinSerialize]
+        [HorizontalGroup("b")]
         public GameObject prefab;
+
+        [PreviewField(Alignment =ObjectFieldAlignment.Left)]
+        [NonSerialized,OdinSerialize]
+        [HorizontalGroup("b")]
+        public Sprite HeadImage;
 
         /// <summary>
         /// 血量的倍率

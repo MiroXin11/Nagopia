@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -22,7 +22,7 @@ namespace Nagopia {
         [BoxGroup("Base")]
         [HorizontalGroup("Base/a")]
         [PropertyRange(0.0f, 1.00f)]
-        [Tooltip("³öÏÖµÄ¼¸ÂÊ")]
+        [Tooltip("å‡ºç°çš„å‡ ç‡")]
         private float probability;
 
         [HideInInspector]
@@ -36,9 +36,15 @@ namespace Nagopia {
         public GameObject prefab;
 
         [ShowInInspector]
-        [NonSerialized, OdinSerialize]
+        [NonSerialized,OdinSerialize]
         [BoxGroup("Base")]
         [HorizontalGroup("Base/b")]
+        [PreviewField(Alignment =ObjectFieldAlignment.Left)]
+        public Sprite HeadImage;
+
+        [ShowInInspector]
+        [NonSerialized, OdinSerialize]
+        [BoxGroup("Base")]
         [InlineProperty]
         [LabelWidth(120)]
         public MinMaxPair<int> PossiblePosition;
@@ -78,10 +84,10 @@ namespace Nagopia {
         [ShowInInspector]
         [NonSerialized,OdinSerialize]
         [BoxGroup("Mental")]
-        [Tooltip("¾«ÉñÊôĞÔµÄ·¶Î§£¬Èç¹ûÎ´Ìí¼ÓÔÚ¸Ã×ÖµäµÄ¾«ÉñÊôĞÔ£¬Ôò»á°´ÕÕGameConfigÖĞÉèÖÃµÄ×î´óÖµ×îĞ¡Öµ·¶Î§À´Éú³É¡£Ìí¼ÓÔÚ¸Ã×ÖµäµÄ¾«ÉñÊôĞÔÔò»á°´ÕÕËùÉè¶¨µÄ·¶Î§À´Éú³É")]
+        [Tooltip("ç²¾ç¥å±æ€§çš„èŒƒå›´ï¼Œå¦‚æœæœªæ·»åŠ åœ¨è¯¥å­—å…¸çš„ç²¾ç¥å±æ€§ï¼Œåˆ™ä¼šæŒ‰ç…§GameConfigä¸­è®¾ç½®çš„æœ€å¤§å€¼æœ€å°å€¼èŒƒå›´æ¥ç”Ÿæˆã€‚æ·»åŠ åœ¨è¯¥å­—å…¸çš„ç²¾ç¥å±æ€§åˆ™ä¼šæŒ‰ç…§æ‰€è®¾å®šçš„èŒƒå›´æ¥ç”Ÿæˆ")]
         public Dictionary<GameDataBase.MentalType, MinMaxPair<byte>> MentalRange = new Dictionary<GameDataBase.MentalType, MinMaxPair<byte>>();
 
-        [Tooltip("¾«Éñ²¹ÕıµÄ¼¯ºÏ£¬ÔÚÉú³É³õ²½µÄÖµºóÔÙÍ¨¹ı¸ÃÖµ½øÒ»²½ĞŞÕı¡£¸ÃÖµÎª³ËÊı£¬Ïà³Ëºó²»»á³¬³öGameConfigÖĞÉè¶¨µÄ×î´óÖµ×îĞ¡Öµ·¶Î§")]
+        [Tooltip("ç²¾ç¥è¡¥æ­£çš„é›†åˆï¼Œåœ¨ç”Ÿæˆåˆæ­¥çš„å€¼åå†é€šè¿‡è¯¥å€¼è¿›ä¸€æ­¥ä¿®æ­£ã€‚è¯¥å€¼ä¸ºä¹˜æ•°ï¼Œç›¸ä¹˜åä¸ä¼šè¶…å‡ºGameConfigä¸­è®¾å®šçš„æœ€å¤§å€¼æœ€å°å€¼èŒƒå›´")]
         [BoxGroup("Mental")]
         [NonSerialized,OdinSerialize]
         public List<MentalPairRevise> Revises = new List<MentalPairRevise>();
@@ -125,19 +131,19 @@ namespace Nagopia {
     public struct MentalPairRevise {
         [HorizontalGroup("Group")]
         [LabelWidth(50)]
-        [Tooltip("²¹ÕıµÄÀàĞÍ")]
+        [Tooltip("è¡¥æ­£çš„ç±»å‹")]
         public GameDataBase.MentalType mental;
 
         [HorizontalGroup("Group")]
         [PropertyRange(0,20)]
         [LabelWidth(50)]
-        [Tooltip("²¹ÕıµÄ±¶ÂÊ")]
+        [Tooltip("è¡¥æ­£çš„å€ç‡")]
         public float revise;
 
         [HorizontalGroup("Group")]
         [PropertyRange(0,1.0f)]
         [LabelWidth(50)]
-        [Tooltip("²¹Õı³öÏÖµÄ¸ÅÂÊ")]
+        [Tooltip("è¡¥æ­£å‡ºç°çš„æ¦‚ç‡")]
         public float probability;
     }
     public struct RandomRangeCurve {
@@ -157,25 +163,25 @@ namespace Nagopia {
         [NonSerialized,OdinSerialize]
         [ShowInInspector]
         [InlineProperty(LabelWidth = 30)]
-        [Tooltip("×îĞ¡ÖµµÄÉú³É·¶Î§")]
+        [Tooltip("æœ€å°å€¼çš„ç”ŸæˆèŒƒå›´")]
         private MinMaxPair<uint> minRange;
 
         [NonSerialized,OdinSerialize]
         [ShowInInspector]
         [InlineProperty(LabelWidth =30)]
-        [Tooltip("×î´óÖµµÄÉú³É·¶Î§")]
+        [Tooltip("æœ€å¤§å€¼çš„ç”ŸæˆèŒƒå›´")]
         private MinMaxPair<uint> maxRange;
 
         [NonSerialized,OdinSerialize]
         [ShowInInspector]
         [InlineProperty(LabelWidth = 30)]
-        [Tooltip("º¯ÊıÇúÏßµÄ¹Õµã·¶Î§")]
+        [Tooltip("å‡½æ•°æ›²çº¿çš„æ‹ç‚¹èŒƒå›´")]
         private MinMaxPair<uint> inflectRange;
 
         [NonSerialized,OdinSerialize]
         [ShowInInspector]
         [InlineProperty(LabelWidth = 30)]
-        [Tooltip("ÇúÏß¶¶¶ÈµÄ·¶Î§")]
+        [Tooltip("æ›²çº¿æŠ–åº¦çš„èŒƒå›´")]
         private MinMaxPair<float> sigmaRange;
     }
 
@@ -232,7 +238,7 @@ namespace Nagopia {
 
 #if UNITY_EDITOR
         public void validate() {
-            if (max.CompareTo(min) < 0) {//´ËÊ±maxĞ¡ÓÚmin
+            if (max.CompareTo(min) < 0) {//æ­¤æ—¶maxå°äºmin
                 max = min;
             }
         }

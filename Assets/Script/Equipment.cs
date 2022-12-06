@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace Nagopia {
     public abstract class Equipment:BaseItem {
 
-        public Equipment(ref ProfPair[]profPairs,Sprite sprite,GameDataBase.ItemRarity rarity=GameDataBase.ItemRarity.RANDOM) {
+        public Equipment(ref ProfPair[]profPairs,Sprite sprite,GameDataBase.ItemRarity rarity=GameDataBase.ItemRarity.RANDOM,string name=""):base(name) {
             foreach (var item in profPairs) {
                 if (item.available) {
                     this.permittedProf.Add(item.prof);
@@ -114,11 +114,19 @@ namespace Nagopia {
         private bool RandomRarity = false;
 
         /// <summary>
-        /// ×°±¸×ÜµÄÏ¡ÓĞ¶È£¬»áÒòÎª´ÊÌõµÄ¸½¼Ó¶øÌáÉı
+        /// è£…å¤‡æ€»çš„ç¨€æœ‰åº¦ï¼Œä¼šå› ä¸ºè¯æ¡çš„é™„åŠ è€Œæå‡
         /// </summary>
         public ushort rarity_Total;
 
         public Sprite sprite;
+
+        /// <summary>
+        /// è½¬åŒ–ä¸ºstringç±»å‹
+        /// </summary>
+        /// <returns>Name:{name},Type:{type},rarity:{rarity},Equipment Type:{equipmentType}</returns>
+        public override string ToString() {
+            return base.ToString()+$",Equipment Type:{equipmentType}";
+        }
     }
     public class rarityPair {
         public rarityPair(byte rarity,int value) {

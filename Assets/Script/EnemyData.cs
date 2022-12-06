@@ -7,12 +7,14 @@ namespace Nagopia
 {
     public class EnemyData
     {
-        public EnemyData(EnemyTemplate template) {
+        public EnemyData(EnemyTemplate template,int level) {
             this.Position = template.Position;
             this.rank = template.rank;
             this.duty = template.duty;
             this.avatar = GameObject.Instantiate(template.prefab);
             this.animatorController = avatar.GetComponent<CharacterAnimatorController>();
+            this.level = level;
+            this.HeadImage = template.HeadImage;
             GenerateAbility(ref template);
             GeneratetMind(ref template);
         }
@@ -57,6 +59,8 @@ namespace Nagopia
         public string name;
 
         public GameObject avatar;
+
+        public Sprite HeadImage;
 
         public CharacterAnimatorController animatorController;
 

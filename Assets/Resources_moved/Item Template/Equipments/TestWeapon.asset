@@ -21,6 +21,9 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: ItemName
+      Entry: 1
+      Data: Test Weapon
     - Name: rarity
       Entry: 3
       Data: 0

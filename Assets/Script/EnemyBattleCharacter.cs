@@ -37,6 +37,8 @@ namespace Nagopia
 
         public GameObject avatar { get => data.avatar; }
 
+        public Sprite HeadImage { get => this.data.HeadImage; }
+
         public CharacterAnimatorController animatorController { get { return data.animatorController; } }
 
         void IBattleCharacter.ThinkMove(BattleInfo battleInfo,System.Action thinkFinishedCallback){

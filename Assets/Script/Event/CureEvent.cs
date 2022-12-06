@@ -16,7 +16,7 @@ namespace Nagopia {
         }
 
         public override string ToString() {
-            return $"{curer.Name} 治疗 {target.Name},{target}当前血量是{target.HP}";
+            return $"{curer.Name} 治疗 {target.Name},{target.Name}当前血量是{target.HP}";
         }
     }
 }

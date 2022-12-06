@@ -10,7 +10,7 @@ namespace Nagopia {
     /// </summary>
     public class BattleCharacter : IBattleCharacter {
         public BattleCharacter(CharacterData data,List<IBattleCharacter>teammates,List<IBattleCharacter>enemy) {
-            this.data= data;
+            this.data = data;
             this.teammates = teammates;
             this.opponents=enemy;
         }
@@ -34,6 +34,8 @@ namespace Nagopia {
         public GameObject avatar { get { return this.data.obj; } }
 
         public CharacterAnimatorController animatorController { get { return data.animatorController; } }
+
+        public Sprite HeadImage { get => this.data.HeadImage; }
 
         public float atb;
 
@@ -243,7 +245,7 @@ namespace Nagopia {
                     }
                 case GameDataBase.CharacterProfession.PRIEST: {
                         var possibleTargets = new List<IBattleCharacter>(battleInfo.teammate_sortByPos);
-                        possibleTargets.Sort((x, y) => x.HP.CompareTo(y.HP));
+                        possibleTargets.Sort((x, y) => { float rateX = (x.HP * 1.0f) / (x.MaxHP*1.0f);float rateY = (y.HP * 1.0f) / (y.MaxHP * 1.0f);return rateX.CompareTo(rateY); });
                         CureEvent cureEvent = new CureEvent(this, possibleTargets[0], (int)this.ATK);
                         SingletonMonobehaviour<EventHandler>.Instance.CureEventHandle(ref cureEvent, () => completeCallback?.Invoke());
                         break;

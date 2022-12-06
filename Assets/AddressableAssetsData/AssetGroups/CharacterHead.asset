@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: CharacterHead
+  m_EditorClassIdentifier: 
+  m_GroupName: CharacterHead
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 6f29426a3e2f90249b649ab67127f7f6
+  m_SerializeEntries:
+  - m_GUID: 0bbb4b1e798b41640b4ef8f72fd63ffa
+    m_Address: Assets/Resources_moved/head/HeadArcher.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ccfd3babd6cd2544a946d723085336ec
+    m_Address: Assets/Resources_moved/head/HeadPriest.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 274576951b4e7bc47841a4cb10389e2b
+    m_Address: Assets/Resources_moved/head/HeadWarrior.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e99fa8458a898e548bf079a14c502590, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 7d2480780e966ff4a94b8ae26f876cb0, type: 2}
+    - {fileID: 11400000, guid: 01690cce7bd98c743893fa90bf110620, type: 2}

@@ -17,6 +17,11 @@ namespace Nagopia
             battleManager=SingletonMonobehaviour<BattleManager>.Instance;
         }
 
+        public void StartBattle(BattleStartEvent eventData,System.Action startFinishedCallback=null,System.Action battleEndCallback=null) {
+            SingletonMonobehaviour<BattleATBIndicator>.Instance.gameObject.SetActive(true);
+            battleManager.StartBattle(eventData.PlayerTeam, eventData.EnemyTeam, startFinishedCallback, battleEndCallback);
+        }
+
         /// <summary>
         /// 处理攻击事件，并检查攻击事件是否触发其它特殊事件
         /// </summary>
@@ -104,7 +109,22 @@ namespace Nagopia
             battleManager.CharacterCure(ref eventData,()=>flag=true);
             yield return Timing.WaitUntilTrue(() => flag);
             completeCallback?.Invoke();
+            outputEventInfo(eventData);
             yield break;
+        }
+
+        public void RestoreHPEventHandle(RestoreHPEvent restoreHP) {
+            var datas = TeamInfo.CharacterDatas;
+            bool isRate = restoreHP.IsRate;
+            float rate=restoreHP.Rate;
+            foreach (var item in datas) {
+                if (isRate) {
+                    item.CurrentHP += (int)(item.CurrentHP * rate);
+                }
+                else {
+                    item.CurrentHP += (int)rate;
+                }
+            }
         }
 
         public void outputEventInfo(BaseEvent baseEvent) {

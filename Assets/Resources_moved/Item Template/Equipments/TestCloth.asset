@@ -21,6 +21,9 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: ItemName
+      Entry: 1
+      Data: Test Cloth
     - Name: rarity
       Entry: 3
       Data: 0
@@ -30,6 +33,9 @@ MonoBehaviour:
     - Name: equipmentType
       Entry: 3
       Data: 1
+    - Name: prefab
+      Entry: 6
+      Data: 
     - Name: abilities
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[Nagopia.EquipmentAbility, Assembly-CSharp]],

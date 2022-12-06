@@ -23,6 +23,8 @@ namespace Nagopia {
 
         bool Curer { get; }
 
+        Sprite HeadImage { get; }
+
         GameObject avatar { get; }
 
         CharacterAnimatorController animatorController { get; }

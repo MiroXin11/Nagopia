@@ -7,6 +7,11 @@ using Sirenix.Serialization;
 [CreateAssetMenu(menuName ="Nagopia/Config")]
 public class GameConfig : SerializedScriptableObject
 {
+    [Min(0)]
+    public int MaximumStage = 10;
+
+    [BoxGroup("Equipment")]
+    [Tooltip("装备词条出现的概率")]
     public readonly double[] Equipment_RPair_Probability = new double[] { 1.0, 0.7, 0.5, 0.3, 0.2, 0.1, 0.05, 0.025, 0.004, 0.015, 0.0005 };
 
     /// <summary>
@@ -58,7 +63,12 @@ public class GameConfig : SerializedScriptableObject
     public readonly float MentalBuffCeiling = 1.5f;
 
     [PropertyRange(1,10)]
+    [BoxGroup("Teaminfo")]
     public readonly byte MaxTeamMember = 5;
+
+    [MinValue(1)]
+    [BoxGroup("Teaminfo")]
+    public readonly int CarriedMaximumEquipment = 30;
 
     [PropertyRange(0,1)]
     [LabelText("挡刀事件发生的基础概率")]
@@ -110,4 +120,5 @@ public class GameConfig : SerializedScriptableObject
     [BoxGroup("Relation")]
     [MinValue(0)]
     public readonly sbyte MaxRelation = 100;
+
 }

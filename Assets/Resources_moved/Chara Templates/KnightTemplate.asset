@@ -17,6 +17,7 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 1967408743301452, guid: ff310c4f18b35f04eade317cac24efba, type: 3}
+    - {fileID: 21300000, guid: 274576951b4e7bc47841a4cb10389e2b, type: 3}
     - {fileID: 11400000}
     - {fileID: 11400000, guid: 916e9717397642948bd4dc794d4f8fdb, type: 2}
     - {fileID: 11400000, guid: f47536b55a8b2e74fbe9580298ea72a1, type: 2}
@@ -36,6 +37,9 @@ MonoBehaviour:
     - Name: prefab
       Entry: 10
       Data: 0
+    - Name: HeadImage
+      Entry: 10
+      Data: 1
     - Name: PossiblePosition
       Entry: 7
       Data: Nagopia.MinMaxPair`1[[System.Int32, mscorlib]], Assembly-CSharp
@@ -254,10 +258,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.Single, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 4
-      Data: 0
+      Data: 1
     - Name: max
       Entry: 4
-      Data: 0
+      Data: 1.5
     - Name: 
       Entry: 8
       Data: 
@@ -395,10 +399,10 @@ MonoBehaviour:
         Assembly-CSharp
     - Name: template
       Entry: 10
-      Data: 1
+      Data: 2
     - Name: Equipment
       Entry: 10
-      Data: 2
+      Data: 3
     - Name: probability
       Entry: 4
       Data: 0.9
@@ -424,10 +428,10 @@ MonoBehaviour:
         Assembly-CSharp
     - Name: template
       Entry: 10
-      Data: 1
+      Data: 2
     - Name: Equipment
       Entry: 10
-      Data: 3
+      Data: 4
     - Name: probability
       Entry: 4
       Data: 0.9
@@ -453,10 +457,10 @@ MonoBehaviour:
         Assembly-CSharp
     - Name: template
       Entry: 10
-      Data: 1
+      Data: 2
     - Name: Equipment
       Entry: 10
-      Data: 4
+      Data: 5
     - Name: probability
       Entry: 4
       Data: 0.9
@@ -482,10 +486,10 @@ MonoBehaviour:
         Assembly-CSharp
     - Name: template
       Entry: 10
-      Data: 1
+      Data: 2
     - Name: Equipment
       Entry: 10
-      Data: 5
+      Data: 6
     - Name: probability
       Entry: 4
       Data: 0.9

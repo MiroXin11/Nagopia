@@ -23,6 +23,7 @@ namespace Nagopia {
             InitializeItem();
             InitializeProfTemplate();
             InitializeEnemyTemplate();
+            TeamInfo.Initialize();
             hasIni = true;
         }
 #if UNITY_EDITOR
@@ -114,12 +115,18 @@ namespace Nagopia {
             };
         }
 
+        /// <summary>
+        /// 根据模板的名字去寻找角色模板，如果没有则会返回null
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static CharaProfTemplate GetCharaTemplate(string name) {
             var templates = CharaTemplates.Values.ToList();
             CharaProfTemplate template = null;
             foreach (var item in templates) {
                 template=item.Find((x)=>x.name== name);
-                if(template!=null) return template;
+                if(template!=null) 
+                    return template;
             }
             return template;
         }

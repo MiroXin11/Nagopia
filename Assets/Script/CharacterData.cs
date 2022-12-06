@@ -15,6 +15,7 @@ namespace Nagopia {
             GenerateMental(ref template);
             obj = GameObject.Instantiate(template.prefab);
             animatorController = obj.GetComponent<CharacterAnimatorController>();
+            HeadImage = template.HeadImage;
             if (!ReferenceEquals(initialRelation, null)) {
                 foreach (var item in initialRelation) {
                     item.source = this;
@@ -26,6 +27,8 @@ namespace Nagopia {
         public string name="";
 
         public GameObject obj;
+
+        public Sprite HeadImage;
 
         public CharacterAnimatorController animatorController;
 
@@ -270,10 +273,22 @@ namespace Nagopia {
 
         public int GetRelationData(CharacterData data) {
             var relation = this.relationData.Find((x) => x.target == data);
-            return relation.relation;
+            return relation != null ? relation.relation : 0;
         }
 
         private List<RelationData> relationData = new List<RelationData>();
+
+        public override string ToString() {
+            string property = $"Name:{name},Prof:{Profession}\n";
+            property += $"HP:{CurrentHP}/{HPMaxValue},ATK:{ATK},DEF:{DEF},SPE:{SPE}\n";
+            property += $"MOR:{mor},COO:{coo},CAL:{cal}\n";
+            string HeadString = head != null ? head.ToString()+"\n" : string.Empty;
+            string ClothString=cloth!=null?cloth.ToString()+"\n" : string.Empty;
+            string ShoesString=shoes!=null?shoes.ToString()+"\n" : string.Empty;
+            string WeaponString=weapon!=null?weapon.ToString()+"\n" : string.Empty;
+            string equipment = $"{HeadString}{ClothString}{ShoesString}{WeaponString}";
+            return property+equipment;
+        }
     }
 
     /// <summary>

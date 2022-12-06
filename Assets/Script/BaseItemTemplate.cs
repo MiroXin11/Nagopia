@@ -11,6 +11,14 @@ namespace Nagopia {
         [HideInInspector]
         public GameDataBase.ItemRarity ItemRarity { get { return this.rarity; } }
 
+        [HideInInspector]
+        public string Name { get { return this.ItemName; } }
+
+        [NonSerialized,OdinSerialize,ShowInInspector]
+        [BoxGroup("Base",ShowLabel =false)]
+        [LabelText("ÎïÆ·Ãû×Ö")]
+        protected string ItemName;
+
         [NonSerialized,OdinSerialize,ShowInInspector]
         [BoxGroup("Base",showLabel:false)]
         [HorizontalGroup("Base/enum")]

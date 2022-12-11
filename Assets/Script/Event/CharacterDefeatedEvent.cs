@@ -7,6 +7,7 @@ namespace Nagopia {
         public CharacterDefeatedEvent(IBattleCharacter victim,IBattleCharacter attcker) {
             this.victim = victim;
             this.attacker= attcker;
+            this.eventType = GameDataBase.EventType.CHARACTER_DEFEATED;
         }
 
         public IBattleCharacter victim;

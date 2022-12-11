@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -29,28 +29,29 @@ namespace Nagopia {
         [DisplayAsString]
         [BoxGroup("Equipment",showLabel:false)]
         [HorizontalGroup("Equipment/a")]
-        [LabelText("×°±¸ÀàĞÍ")]
+        [LabelText("è£…å¤‡ç±»å‹")]
         [Space()]
         protected GameDataBase.EquipmentType equipmentType = GameDataBase.EquipmentType.INVALID;
 
         [System.NonSerialized,OdinSerialize,ShowInInspector]
         [BoxGroup("Equipment",showLabel:false)]
-        [HorizontalGroup("Equipment/a")]
+        [LabelText("å›¾åƒ")]
         [PreviewField]
-        public readonly Sprite prefab;
+        [AssetSelector(Paths ="Assets/Resources_moved/icons/Equipments/")]
+        public readonly Sprite image;
 
         [HideInInspector]
         public EquipmentAbility[] Abilities { get { return this.abilities.ToArray(); } }
 
         [System.NonSerialized,OdinSerialize,ShowInInspector]
         [BoxGroup("Equipment")]
-        [LabelText("»ù´¡ÊôĞÔÖµ")]
+        [LabelText("åŸºç¡€å±æ€§å€¼")]
         [Space()]
         private List<EquipmentAbility> abilities=new List<EquipmentAbility>();
 
         [System.NonSerialized, OdinSerialize, ShowInInspector]
         [BoxGroup("Equipment")]
-        [LabelText("ÊÊÓÃµÄÖ°Òµ")]
+        [LabelText("é€‚ç”¨çš„èŒä¸š")]
         [Space()]
         [ListDrawerSettings(DraggableItems = false, HideAddButton = true, HideRemoveButton = true)]
         public ProfPair[] requirements;
@@ -60,8 +61,8 @@ namespace Nagopia {
 
         [System.NonSerialized, OdinSerialize, ShowInInspector]
         [BoxGroup("Equipment")]
-        [LabelText("¿ÉÄÜ³öÏÖµÄÊôĞÔ¼°¸ÃÊôĞÔÕäÏ¡¶È")]
-        [Tooltip("ÕäÏ¡¶ÈÔ½¸ß£¬³öÏÖµÄ¸ÅÂÊÒ²Ô½µÍ£¬¾ßÌåµÄ¸ÅÂÊ¿ÉÒÔ²Î¼ûRandomNumberGeneratorÖĞµÄHappened(byte)")]
+        [LabelText("å¯èƒ½å‡ºç°çš„å±æ€§åŠè¯¥å±æ€§çç¨€åº¦")]
+        [Tooltip("çç¨€åº¦è¶Šé«˜ï¼Œå‡ºç°çš„æ¦‚ç‡ä¹Ÿè¶Šä½ï¼Œå…·ä½“çš„æ¦‚ç‡å¯ä»¥å‚è§RandomNumberGeneratorä¸­çš„Happened(byte)")]
         [Space()]
         [ListDrawerSettings(DraggableItems =true)]
         private List<RarityPair_Template> additional_abilities = new List<RarityPair_Template>();
@@ -69,7 +70,7 @@ namespace Nagopia {
 #if UNITY_EDITOR
         public void OnValidate() {
 
-            //¼ì²éÖ°ÒµÀàĞÍÊÇ·ñ·¢Éú¸Ä±ä
+            //æ£€æŸ¥èŒä¸šç±»å‹æ˜¯å¦å‘ç”Ÿæ”¹å˜
             var profs = System.Enum.GetValues(typeof(GameDataBase.CharacterProfession));
             int length = profs.Length;
             int oldLength = this.requirements.Length;
@@ -90,14 +91,14 @@ namespace Nagopia {
             value = values;
         }
 
-        [LabelText("ÊıÖµÀàĞÍ")]
+        [LabelText("æ•°å€¼ç±»å‹")]
         [HorizontalGroup("Ability")]
         public readonly GameDataBase.AbilityType type;
 
         [OdinSerialize,ShowInInspector]
-        [LabelText("ÊıÖµ")]
+        [LabelText("æ•°å€¼")]
         [HorizontalGroup("Ability")]
-        [PropertyTooltip("»ù×¼ÊıÖµ£¬¿ÉÒÔÀí½âÎªËæ×ÅÓÎÏ·½ø¶È·¢Õ¹£¬¸ÃÊıÖµµÄ±ä»¯Çé¿ö£¬Í¬Ò»ÓÎÏ·½ø¶ÈÏÂ¸ÃÖµÔ½´ó£¬ÔòÎäÆ÷»ù´¡ÊıÖµÔ½¸ß")]
+        [PropertyTooltip("åŸºå‡†æ•°å€¼ï¼Œå¯ä»¥ç†è§£ä¸ºéšç€æ¸¸æˆè¿›åº¦å‘å±•ï¼Œè¯¥æ•°å€¼çš„å˜åŒ–æƒ…å†µï¼ŒåŒä¸€æ¸¸æˆè¿›åº¦ä¸‹è¯¥å€¼è¶Šå¤§ï¼Œåˆ™æ­¦å™¨åŸºç¡€æ•°å€¼è¶Šé«˜")]
         public float Value { get { return this.value; } private set { this.value = value; } }
 
         [System.NonSerialized,OdinSerialize,HideInInspector]
@@ -106,31 +107,31 @@ namespace Nagopia {
 
     public struct RarityPair_Template {
 
-        [LabelText("ÊôĞÔÀàĞÍ")]
+        [LabelText("å±æ€§ç±»å‹")]
         [HorizontalGroup("Pair")]
         [LabelWidth(50)]
         public GameDataBase.AbilityType type;
         
-        [LabelText("Ï¡ÓĞ¶È"),HorizontalGroup("Pair")]
+        [LabelText("ç¨€æœ‰åº¦"),HorizontalGroup("Pair")]
         [Range(0,10)]
         [LabelWidth(50)]
-        [Tooltip("µ±ÊıÖµÎª0Ê±£¬¸Ã´ÊÌõ±Ø¶¨»á³öÏÖ")]
+        [Tooltip("å½“æ•°å€¼ä¸º0æ—¶ï¼Œè¯¥è¯æ¡å¿…å®šä¼šå‡ºç°")]
         public byte rarity;
 
-        [LabelText("ÊıÖµ"),HorizontalGroup("Pair")]
+        [LabelText("æ•°å€¼"),HorizontalGroup("Pair")]
         [Indent()]
         [LabelWidth(50)]
-        [Tooltip("»ù×¼ÊıÖµ£¬¿ÉÒÔÀí½âÎªËæ×ÅÓÎÏ·½ø¶È·¢Õ¹£¬¸ÃÊıÖµµÄ±ä»¯Çé¿ö£¬Í¬Ò»ÓÎÏ·½ø¶ÈÏÂ¸ÃÖµÔ½´ó£¬ÔòÎäÆ÷»ù´¡ÊıÖµÔ½¸ß")]
+        [Tooltip("åŸºå‡†æ•°å€¼ï¼Œå¯ä»¥ç†è§£ä¸ºéšç€æ¸¸æˆè¿›åº¦å‘å±•ï¼Œè¯¥æ•°å€¼çš„å˜åŒ–æƒ…å†µï¼ŒåŒä¸€æ¸¸æˆè¿›åº¦ä¸‹è¯¥å€¼è¶Šå¤§ï¼Œåˆ™æ­¦å™¨åŸºç¡€æ•°å€¼è¶Šé«˜")]
         public float value;
     }
 
     public struct ProfPair {
-        [LabelText("Ö°Òµ")]
+        [LabelText("èŒä¸š")]
         [HorizontalGroup("ProfPair")]
         [ReadOnly]
         public GameDataBase.CharacterProfession prof;
 
-        [LabelText("¿ÉÓÃ")]
+        [LabelText("å¯ç”¨")]
         [HorizontalGroup("ProfPair")]
         public bool available;
     }

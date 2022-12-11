@@ -13,6 +13,7 @@ namespace Nagopia {
             this.curer = curer;
             this.target= target;
             this.HPResotred = HP;
+            this.eventType = GameDataBase.EventType.CHARACTER_CURE;
         }
 
         public override string ToString() {

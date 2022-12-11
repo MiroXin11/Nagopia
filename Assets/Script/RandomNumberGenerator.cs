@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ public class RandomNumberGenerator
         probability = Clamp01(probability);
         int rng = Average_GetRandomNumber(0, int.MaxValue);
         int Comparer = System.Convert.ToInt32(probability * int.MaxValue);
-        //Debug.Log($"rng={rng},Compare={Comparer}");
+        //Debug.Log($"rng={rng}");
         return rng < Comparer;
     }
 
@@ -35,7 +36,8 @@ public class RandomNumberGenerator
         if (max == min&&max!=int.MaxValue) {
             max += 1;
         }
-        if(includeRight&&max!=int.MaxValue)
+        AddUsedTimes();
+        if (includeRight&&max!=int.MaxValue)
             return Random.Range(min, max+1);
         else
             return Random.Range(min, max);
@@ -56,6 +58,7 @@ public class RandomNumberGenerator
             max += 1;
         }
         int val = 0;
+        AddUsedTimes();
         if (includeRight&&max!=byte.MaxValue)
             val = Random.Range(min, max+1);
         else
@@ -79,6 +82,7 @@ public class RandomNumberGenerator
         if (mi == ma && ma != int.MaxValue) {
             ma += 1;
         }
+        AddUsedTimes();
         if (includeRight && max != int.MaxValue)
             return System.Convert.ToUInt32(Random.Range(mi, ma + 1));
         else
@@ -89,6 +93,7 @@ public class RandomNumberGenerator
         if (min > max) {
             SwapData<float>(ref min,ref max);
         }
+        AddUsedTimes();
         return Random.Range(min, max);
     }
 
@@ -96,6 +101,7 @@ public class RandomNumberGenerator
         if (min > max) {
             SwapData<double>(ref min, ref max);
         }
+        AddUsedTimes();
         return Random.Range((float)min, (float)max);
     }
 
@@ -113,6 +119,7 @@ public class RandomNumberGenerator
         ++max;
         do {
             res = Random.Range(min, max);
+            AddUsedTimes();
             y = Normal(ref res, ref miu, ref sig);
             dScope = Normal(ref miu, ref miu, ref sig);
         } while (dScope > y);
@@ -141,5 +148,22 @@ public class RandomNumberGenerator
         T temp = x;
         x = y;
         y = temp;
+    }
+
+    private static int usedTimes = 0;
+
+    private static void AddUsedTimes() {
+        ++usedTimes;
+        if (usedTimes >= 10) {
+            usedTimes = 0;
+            InitialRandom();
+        }
+    }
+
+    public static void InitialRandom() {
+        byte[] bytes = new byte[4];
+        RNGCryptoServiceProvider rNG = new RNGCryptoServiceProvider();
+        rNG.GetBytes(bytes);
+        Random.InitState(System.BitConverter.ToInt32(bytes, 0));
     }
 }

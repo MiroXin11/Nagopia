@@ -7,11 +7,12 @@ namespace Nagopia {
         public CharacterDeathEvent(IBattleCharacter victim,IBattleCharacter killer) {
             this.victim = victim;
             this.killer = killer;
+            this.eventType = GameDataBase.EventType.CHARACTER_DIED;
         }
 
-        IBattleCharacter victim;
+        public IBattleCharacter victim;
 
-        IBattleCharacter killer;
+        public IBattleCharacter killer;
 
         public override string ToString() {
             return $"{victim.Name} was killed by {killer.Name}";

@@ -5,6 +5,7 @@ namespace Nagopia {
     public class EscapeEvent : BaseEvent {
         public EscapeEvent(IBattleCharacter character) {
             this.character = character;
+            this.eventType = GameDataBase.EventType.CHARACTER_ESCAPE;
         }
 
         public override string ToString() {

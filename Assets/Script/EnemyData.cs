@@ -11,10 +11,14 @@ namespace Nagopia
             this.Position = template.Position;
             this.rank = template.rank;
             this.duty = template.duty;
-            this.avatar = GameObject.Instantiate(template.prefab);
+            this.avatar = GameObject.Instantiate(template.prefab,parent);
+            this.avatar.transform.localPosition = initialPos;
             this.animatorController = avatar.GetComponent<CharacterAnimatorController>();
             this.level = level;
             this.HeadImage = template.HeadImage;
+            this.attackAnimationType = template.attackAnimationType;
+            this.expRate = template.exp_rate;
+            this.name = template.Name;
             GenerateAbility(ref template);
             GeneratetMind(ref template);
         }
@@ -31,6 +35,8 @@ namespace Nagopia
         public uint SPE;
 
         public int level;
+
+        public float expRate;
 
         /// <summary>
         /// 领导力
@@ -55,6 +61,8 @@ namespace Nagopia
         public GameDataBase.EnemyRarity rank;
 
         public GameDataBase.EnemyDuty duty;
+
+        public GameDataBase.AttackAnimationType attackAnimationType;
 
         public string name;
 
@@ -108,5 +116,9 @@ namespace Nagopia
         }
 
         private static Array mentalArray = Enum.GetValues(typeof(GameDataBase.MentalType));
+
+        private Transform parent=Camera.main.transform;
+
+        private static Vector3 initialPos = new Vector3(500, 0, 2); 
     }
 }

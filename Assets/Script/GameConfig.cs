@@ -64,9 +64,11 @@ public class GameConfig : SerializedScriptableObject
 
     [PropertyRange(1,10)]
     [BoxGroup("Teaminfo")]
+    [LabelText("队伍人数上限")]
     public readonly byte MaxTeamMember = 5;
 
     [MinValue(1)]
+    [LabelText("全队可携带最大装备")]
     [BoxGroup("Teaminfo")]
     public readonly int CarriedMaximumEquipment = 30;
 
@@ -77,16 +79,17 @@ public class GameConfig : SerializedScriptableObject
     public readonly double SubstitudeEventBaseProbability = 0.15;
 
     [PropertyRange(0, 1)]
+    [Tooltip("在自身承伤会死的情况，愿意去挡刀的概率")]
+    [LabelText("牺牲生命挡刀概率")]
+    [BoxGroup("Probability")]
+    [BoxGroup("Probability/Substitude")]
+    public readonly double SubstituteOnDeadProbability = 0.1;
+
+    [PropertyRange(0, 1)]
     [LabelText("逃跑事件发生的基础概率")]
     [BoxGroup("Probability")]
     [BoxGroup("Probability/Escape")]
     public readonly double EscapeEventBaseProbability = 0.2;
-
-    [PropertyRange(0, 1)]
-    [Tooltip("在自身承伤会死的情况，愿意去挡刀的概率")]
-    [BoxGroup("Probability")]
-    [BoxGroup("Probability/Subsitude")]
-    public readonly double SubsitudeOnDeadProbability = 0.1;
 
     [PropertyRange(0,1)]
     [LabelText("慌张状态下逃跑事件发生的基础概率")]
@@ -97,6 +100,7 @@ public class GameConfig : SerializedScriptableObject
 
     [PropertyRange(0,1)]
     [Tooltip("这个参数表示，自身在成为受击对象时，自己这轮行动会身死但能击败对方全体时，自己逃跑的参数")]
+    [LabelText("受击死亡逃跑概率")]
     [BoxGroup("Probability")]
     [BoxGroup("Probability/Escape")]
     public readonly double EscapeDieAndDefeatProbability = 0.1;
@@ -104,8 +108,20 @@ public class GameConfig : SerializedScriptableObject
     [PropertyRange(0, 1)]
     [LabelText("角色死亡概率")]
     [BoxGroup("Probability")]
-    [BoxGroup("probability/Death")]
+    [BoxGroup("Probability/Death")]
     public readonly float CharacterDiedProbability = 0.15f;
+
+    [PropertyRange(0, 1)]
+    [LabelText("出现新队友的概率")]
+    [BoxGroup("Probability")]
+    [BoxGroup("Probability/Special")]
+    public readonly double NewTeammateProbability = 0.2;
+
+    [PropertyRange(0, 1)]
+    [LabelText("团队回血的概率")]
+    [BoxGroup("Probability")]
+    [BoxGroup("Probability/Special")]
+    public readonly double RestoreProbability = 0.3;
 
     [Tooltip("角色血量低于百分之多少时，处于危机状态")]
     public readonly float SingleCharaLowHPParam = 0.2f;
@@ -121,4 +137,5 @@ public class GameConfig : SerializedScriptableObject
     [MinValue(0)]
     public readonly sbyte MaxRelation = 100;
 
+    
 }

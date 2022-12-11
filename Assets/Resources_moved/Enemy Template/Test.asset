@@ -29,6 +29,15 @@ MonoBehaviour:
     - Name: duty
       Entry: 3
       Data: 0
+    - Name: attackAnimationType
+      Entry: 3
+      Data: 1
+    - Name: exp_rate
+      Entry: 4
+      Data: 1
+    - Name: Name
+      Entry: 6
+      Data: 
     - Name: prefab
       Entry: 10
       Data: 0

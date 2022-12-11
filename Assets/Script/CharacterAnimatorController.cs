@@ -55,9 +55,9 @@ namespace Nagopia {
         }
 
         [Button]
-        public virtual void Fade(float time = 0.5f,System.Action completeCallback=null) {
+        public virtual void Fade(float endValue = 0f,float time = 0.5f,System.Action completeCallback=null) {
             foreach (var item in spriteRenderers) {
-                item.DOFade(0f, time).SetEase(Ease.OutExpo).OnComplete(()=>completeCallback?.Invoke());
+                item.DOFade(endValue, time).SetEase(Ease.OutExpo).OnComplete(()=>completeCallback?.Invoke());
             }
         }
 

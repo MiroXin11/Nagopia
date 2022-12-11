@@ -7,10 +7,23 @@ namespace Nagopia {
 
     [System.Serializable]
     public class CharacterData {
-        public CharacterData(ref CharaProfTemplate template,ref int level,List<RelationData>initialRelation=null) {
+        public CharacterData(ref CharaProfTemplate template,ref int level,List<RelationData>initialRelation=null,string name="") {
+            if (string.Equals(name, "")) {
+                this.name = GameDataBase.GetRandomName();
+                if (string.Equals(this.name, "Miro") || string.Equals(this.name, "符成杰")) {
+                    var BugTemplate = GameDataBase.GetCharaTemplate("MiroTemplate");
+                    if(!ReferenceEquals(BugTemplate, null)) {
+                        template= BugTemplate;
+                    }
+                }
+            }
+            else {
+                this.name = name;
+            }
             this.profession = template.AdaptProf;
             this.Position = RandomNumberGenerator.Average_GetRandomNumber(template.PossiblePosition.min, template.PossiblePosition.max);
             this.Level = level;
+            this.exp = 0;
             GenerateAbility(ref template,ref level);
             GenerateMental(ref template);
             obj = GameObject.Instantiate(template.prefab);
@@ -90,6 +103,27 @@ namespace Nagopia {
         public GameDataBase.CharacterProfession Profession { get { return profession; } set {
                 this.profession = value;
             } }
+
+        private int exp;
+
+        public int Exp => this.exp;
+
+        public int ExpToNextLevel => 50 * level;
+
+        public void AddExp(int gain) {
+            while (gain > 0) {
+                int difference = ExpToNextLevel - exp;
+                if (difference > gain) {//获得的经验未达到升级所需要的经验
+                    exp += gain;
+                    break;
+                }
+                else {
+                    exp = 0;
+                    gain -= difference;
+                    ++level;
+                }
+            }
+        }
 
         private GameDataBase.CharacterProfession profession;
 

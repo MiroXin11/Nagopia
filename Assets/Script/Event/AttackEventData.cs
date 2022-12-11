@@ -12,6 +12,7 @@ namespace Nagopia
             this.Damage= damage;
             this.battleInfo= battleInfo;
             this.animationType= animationType;
+            this.eventType = GameDataBase.EventType.CHARACTER_ATTACK;
         }
 
         public IBattleCharacter attacker;

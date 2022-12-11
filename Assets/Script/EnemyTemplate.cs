@@ -10,14 +10,26 @@ namespace Nagopia {
 
         [Tooltip("敌人的分级")]
         [HorizontalGroup("a")]
+        [LabelWidth(40)]
         public readonly GameDataBase.EnemyRarity rank;
 
         [Tooltip("角色的定位，影响攻击逻辑")]
         [HorizontalGroup("a")]
+        [LabelWidth(40)]
         public readonly GameDataBase.EnemyDuty duty;
 
+        [HorizontalGroup("a")]
+        [Tooltip("角色攻击动画的类型")]
+        [LabelWidth(80)]
+        [LabelText("AttackType")]
+        public readonly GameDataBase.AttackAnimationType attackAnimationType;
+
         [Tooltip("经验比例")]
-        public float exp_rate;
+        [HorizontalGroup("c")]
+        public readonly float exp_rate;
+
+        [HorizontalGroup("c")]
+        public readonly string Name;
 
         [PreviewField(Alignment =ObjectFieldAlignment.Left)]
         [NonSerialized,OdinSerialize]

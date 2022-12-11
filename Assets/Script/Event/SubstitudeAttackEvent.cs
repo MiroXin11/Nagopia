@@ -7,6 +7,7 @@ namespace Nagopia {
             this.attacker = attacker;
             this.originalTarget = orignal;
             this.newTarget = newTarget;
+            this.eventType = GameDataBase.EventType.CHARACTER_SUBSITITUDE;
         }
 
         public IBattleCharacter attacker;

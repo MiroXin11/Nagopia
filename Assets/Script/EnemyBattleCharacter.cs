@@ -69,7 +69,7 @@ namespace Nagopia
             var target = battleInfo.enemy_sortByPos[0];
             IBattleCharacter temp = this;
             int damage = BattleManager.CalculateDamage(temp, target);
-            AttackEventData attackEventData = new AttackEventData(ref temp, ref target,damage ,ref battleInfo);
+            AttackEventData attackEventData = new AttackEventData(ref temp, ref target,damage ,ref battleInfo,this.data.attackAnimationType);
             SingletonMonobehaviour<EventHandler>.Instance.AttackEventHandle(attackEventData,completeCallback);
         }
 
@@ -78,7 +78,7 @@ namespace Nagopia
             teammates.Sort((x, y) => x.HP.CompareTo(y.HP));
             var target = teammates[0];//选择血量最少的友方进行治疗，虽然默认都是最前排
             CureEvent cureEvent = new CureEvent(this, target, (int)this.ATK);
-            SingletonMonobehaviour<EventHandler>.Instance.CureEventHandle(ref cureEvent);
+            SingletonMonobehaviour<EventHandler>.Instance.CureEventHandle(ref cureEvent,completeCallback);
         }
 
         /// <summary>

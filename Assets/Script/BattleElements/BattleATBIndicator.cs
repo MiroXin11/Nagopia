@@ -36,6 +36,7 @@ namespace Nagopia {
             battleManager.onATBUpdate.RemoveListener(UpdateCharacterATB);
             battleManager.onCharacterDefeated.RemoveListener(RemoveCharacter);
             battleManager.onBattleEnd.RemoveListener(BattleEnd);
+            RemoveData();
         }
 
         private void StartBattle(BattleInfo info) {
@@ -87,7 +88,7 @@ namespace Nagopia {
 
         private void BattleEnd(BattleInfo info) {
             RemoveData(info);
-            this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(false);
         }
 
         private void RemoveCharacter(IBattleCharacter character) {
@@ -95,7 +96,7 @@ namespace Nagopia {
             transforms.Remove(character);
         }
 
-        private void RemoveData(BattleInfo info) {
+        private void RemoveData(BattleInfo info=null) {
             foreach (var item in transforms) {
                 GameObject.DestroyImmediate(item.Value.gameObject);
             }

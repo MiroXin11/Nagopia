@@ -28,6 +28,11 @@ namespace Nagopia {
         [HideInInspector]
         public float Probability => probability;
 
+        [Tooltip("角色可能出现在的关卡阶段")]
+        [NonSerialized,OdinSerialize]
+        [BoxGroup("Base")]
+        public MinMaxPair<int> ShowUPStage;
+
         [ShowInInspector]
         [NonSerialized, OdinSerialize]
         [BoxGroup("Base")]
@@ -121,6 +126,10 @@ namespace Nagopia {
             this.AvalibleCloth.RemoveAll((item) => !item.Equipment.ValidateProf(this.AdaptProf));
             this.AvalibleShoes.RemoveAll((item) => !item.Equipment.ValidateProf(this.AdaptProf));
             this.AvalibleWeapon.RemoveAll((item) => !item.Equipment.ValidateProf(this.AdaptProf));
+        }
+
+        public bool CanAppear(int stage) {
+            return ShowUPStage.min<=stage&&stage<=ShowUPStage.max;
         }
 
         private ProbableEquipmentPair<HeadEquipmentTemplate> AddNewHead() { var res=new ProbableEquipmentPair<HeadEquipmentTemplate>();res.SetTemplate(this); return res; }

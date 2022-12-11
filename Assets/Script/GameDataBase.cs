@@ -23,7 +23,7 @@ namespace Nagopia {
             InitializeItem();
             InitializeProfTemplate();
             InitializeEnemyTemplate();
-            TeamInfo.Initialize();
+            TeamInfo.Initialize();//这个实际上需要读取存档才可以
             hasIni = true;
         }
 #if UNITY_EDITOR
@@ -33,7 +33,6 @@ namespace Nagopia {
 #if UNITY_EDITOR
             if (ReferenceEquals(null, config)) {
                 config = AssetDatabase.LoadAssetAtPath<GameConfig>("Assets/Resources_moved/Config/DefaultConfig.asset");
-                //Debug.Log("Load Config");
             }
 #else
             var handle=Addressables.LoadAssetAsync<GameConfig>("GameConfig");
@@ -46,8 +45,7 @@ namespace Nagopia {
             var minMental = config.MinMental;
             int difference = maxMental - minMental+1;
             double gap = (MentalBuffCeiling - MentalBuffFloor) / (difference - 1.0);
-            MentalBuffParams = new List<double>(difference+1);
-            MentalBuffParams.Add(0);
+            MentalBuffParams = new List<double>(difference + 1) {0};
             for(int i=1;i<MentalBuffParams.Capacity;i++){
                 MentalBuffParams.Add(MentalBuffFloor + (i - 1) * gap);
             }
@@ -59,7 +57,8 @@ namespace Nagopia {
             foreach (var item in array) {
                 CharaTemplates.Add((GameDataBase.CharacterProfession)item, new List<CharaProfTemplate>());
             }
-            GetAllCharaTemplate();
+            //GetAllCharaTemplate();
+            LoadAllCharaTemplate();
         }
 
         private static void InitializeItem() {
@@ -67,7 +66,7 @@ namespace Nagopia {
             foreach (var item in array) {
                 ItemTemplates.Add((GameDataBase.ItemType)item, new List<BaseItemTemplate>());
             }
-            GetAllEquipmentTemplate();
+            LoadAllEquipmentTemplate();
         }
 
         private static void InitializeEnemyTemplate() {
@@ -75,13 +74,17 @@ namespace Nagopia {
             foreach (var item in array) {
                 EnemyTemplates.Add((GameDataBase.EnemyRarity)item, new List<EnemyTemplate>());
             }
-            GetAllEnemyTemplate();
+            array = Enum.GetValues(typeof(GameDataBase.EnemyTeamDescribtion));
+            foreach (GameDataBase.EnemyTeamDescribtion item in array) {
+                EnemyTeamTemplates.Add(item, new List<EnemyTeamTemplate>());
+            }
+            LoadAllEnemyTemplate();
         }
 
         /// <summary>
         /// 需要在运行模式下才能正常执行
         /// </summary>
-        private static void GetAllEquipmentTemplate() {
+        private static void LoadAllEquipmentTemplate() {
             var handle = Addressables.LoadAssetsAsync<EquipmentTemplate>("EquipmentTemplate", null);
             handle.WaitForCompletion();
             var list = ItemTemplates[ItemType.EQUIPMENT];
@@ -93,7 +96,7 @@ namespace Nagopia {
         /// <summary>
         /// 需要在运行模式下才能正常执行
         /// </summary>
-        private static void GetAllCharaTemplate() {
+        private static void LoadAllCharaTemplate() {
             var handle = Addressables.LoadAssetsAsync<CharaProfTemplate>("CharacterTemplate", null);
             handle.WaitForCompletion();
             var res = handle.Result;
@@ -105,12 +108,18 @@ namespace Nagopia {
         /// <summary>
         /// 需在运行模式下才能正常执行
         /// </summary>
-        private static void GetAllEnemyTemplate() {
+        private static void LoadAllEnemyTemplate() {
             var handle = Addressables.LoadAssetsAsync<EnemyTemplate>("EnemyTemplate", null);
             handle.Completed += (handle) => {
                 var res=handle.Result;
                 foreach (var item in res) {
                     EnemyTemplates[item.rank].Add(item);
+                }
+            };
+            var Teamhandle = Addressables.LoadAssetsAsync<EnemyTeamTemplate>("EnemyTeamTemplate", null);
+            Teamhandle.Completed += (handle) => { var res = handle.Result;
+                foreach (EnemyTeamTemplate item in res) {
+                    EnemyTeamTemplates[item.describtion].Add(item);
                 }
             };
         }
@@ -143,6 +152,14 @@ namespace Nagopia {
                 }
             }
             return wanted[0];
+        }
+
+        public static List<CharaProfTemplate> GetAllCharaTemplate() {
+            List<CharaProfTemplate> wanted = new List<CharaProfTemplate>();
+            foreach (var item in CharaTemplates) {
+                wanted.AddRange(item.Value);
+            }
+            return wanted;
         }
 
         /// <summary>
@@ -211,6 +228,26 @@ namespace Nagopia {
             if(res.Count==0)
                 return null;
             return res[RandomNumberGenerator.Average_GetRandomNumber(0, res.Count, false)];
+        }
+
+        public static EnemyTeamTemplate GetEnemyTeamTemplate(int difficulty,int required=0) {
+            if (required == 0) {
+                var list=new List<EnemyTeamTemplate>();
+                foreach (var item in EnemyTeamTemplates.Values) {
+                    list.AddRange(item);
+                }
+                var res = list.FindAll(x => x.Equals(difficulty));
+                if (res.Count == 0)
+                    return list[0];
+                return res[RandomNumberGenerator.Average_GetRandomNumber(0, res.Count)];
+            }
+            else {
+                var list = EnemyTeamTemplates[(GameDataBase.EnemyTeamDescribtion)required];
+                var available = list.FindAll((x) => x.CanAppear(difficulty));
+                if (available.Count == 0)
+                    return list[0];
+                return available[RandomNumberGenerator.Average_GetRandomNumber(0, available.Count)];
+            }
         }
 
         public enum CharacterProfession {
@@ -325,11 +362,45 @@ namespace Nagopia {
         }
 
         public enum AttackAnimationType {
-            CLOSE=1,
-            REMOTE=2,
+            CLOSE=0,
+            REMOTE=1,
         }
 
-        public static byte GameStage = 1;
+        public enum EnemyTeamDescribtion {
+            EASY=1,
+            NORMAL=2,
+            HARD=3,
+            EXTREME=4,
+            BOSS,
+        }
+
+        public enum EventType {
+            INVALID=-1,
+            BATTLE_START=100,
+            CHARACTER_ATTACK=101,
+            CHARACTER_CURE=102,
+            CHARACTER_ESCAPE=103,
+            CHARACTER_HURT,
+            CHARACTER_SUBSITITUDE,
+            CHARACTER_DEFEATED,
+            CHARACTER_DIED,
+            BATTLE_WIN,
+
+            EXP_GAINED=200,
+            RESTORE_TEAM=1000,
+            NEW_TEAMMATE_GENERATE,
+            NEW_TEAMMATE_JOIN,
+            NEW_TEAMMATE_REFUSE,
+            NOTHINGHAPPENED,
+
+            GAMELOSE=10000,
+        }
+
+        public static string GetRandomName() {
+            return NameList[RandomNumberGenerator.Average_GetRandomNumber(0, NameList.Length,false)];
+        }
+
+        public static int GameStage = 0;
 
         [NonSerialized,OdinSerialize]
         [AssetsOnly]
@@ -345,9 +416,11 @@ namespace Nagopia {
         private static List<double> MentalBuffParams;
 
         private static readonly Dictionary<GameDataBase.CharacterProfession, List<CharaProfTemplate>> CharaTemplates = new Dictionary<CharacterProfession, List<CharaProfTemplate>>();
-        private static readonly Dictionary<GameDataBase.EnemyRarity, List<EnemyTemplate>> EnemyTemplates = new Dictionary<EnemyRarity, List<EnemyTemplate>>(); 
+        private static readonly Dictionary<GameDataBase.EnemyRarity, List<EnemyTemplate>> EnemyTemplates = new Dictionary<EnemyRarity, List<EnemyTemplate>>();
         private static readonly Dictionary<GameDataBase.ItemType, List<BaseItemTemplate>> ItemTemplates = new Dictionary<ItemType, List<BaseItemTemplate>>();
+        private static readonly Dictionary<GameDataBase.EnemyTeamDescribtion, List<EnemyTeamTemplate>> EnemyTeamTemplates = new Dictionary<EnemyTeamDescribtion, List<EnemyTeamTemplate>>();
         //private static readonly Dictionary<GameDataBase.CharacterProfession, CharacterCurveTemple> ProfAbiTemplates = new Dictionary<CharacterProfession, CharacterCurveTemple>();
+        public static readonly string[] NameList = {"Miro","Wrp","Jack","Jesse","Harry","Kane","Rash","Madison","Tom","Jerry","Bruce","Wayne","Crack","Stack","Peter","Park","Tim","符成杰","王睿芃","Kratos","Ezio","Cristiano" };
     }
 
 

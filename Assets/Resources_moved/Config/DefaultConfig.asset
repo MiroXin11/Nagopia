@@ -69,6 +69,9 @@ MonoBehaviour:
     - Name: MovedRequireATB
       Entry: 4
       Data: 1000
+    - Name: BattleSysUpdateTimesPerSec
+      Entry: 3
+      Data: 100
     - Name: MinLevel
       Entry: 3
       Data: 1
@@ -96,22 +99,46 @@ MonoBehaviour:
     - Name: MaxTeamMember
       Entry: 3
       Data: 5
+    - Name: CarriedMaximumEquipment
+      Entry: 3
+      Data: 30
+    - Name: SubstitudeEventBaseProbability
+      Entry: 4
+      Data: 0.20000000298023224
+    - Name: SubstituteOnDeadProbability
+      Entry: 4
+      Data: 0.1
     - Name: EscapeEventBaseProbability
       Entry: 4
       Data: 0.059999998658895493
-    - Name: SubstitudeEventBaseProbability
+    - Name: EscapeUnderPressureProbability
       Entry: 4
-      Data: 1
+      Data: 0.0020000000949949026
+    - Name: EscapeDieAndDefeatProbability
+      Entry: 4
+      Data: 0.1
     - Name: CharacterDiedProbability
       Entry: 4
       Data: 0.15
+    - Name: NewTeammateProbability
+      Entry: 4
+      Data: 0.2
+    - Name: RestoreProbability
+      Entry: 4
+      Data: 0.3
     - Name: SingleCharaLowHPParam
       Entry: 4
       Data: 0.2
     - Name: PlayerTeamLowHPParam
       Entry: 4
       Data: 0.4
+    - Name: MinRelation
+      Entry: 3
+      Data: -100
+    - Name: MaxRelation
+      Entry: 3
+      Data: 100
+  MaximumStage: 10
   GameSpeed: 1
-  BattleSysUpdateTimesPerSec: 120
-  ATBUpPerSec: 150
   CurrentStage: 0
+  ATBUpPerSec: 150

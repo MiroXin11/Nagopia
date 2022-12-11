@@ -167,7 +167,7 @@ namespace Nagopia {
                     return RandomNumberGenerator.Happened(probability);
                 }
                 else {//自己承伤后会死亡
-                    var probability = config.SubsitudeOnDeadProbability;
+                    var probability = config.SubstituteOnDeadProbability;
                     double p1 = CalculateMentalBuffParam(this.data.MOR, ref param, true);
                     double p2 = CalculateMentalBuffParam(this.data.COO, ref param, true);
                     double p3 = CalculateMentalBuffParam(this.data.LEA, ref param, true);

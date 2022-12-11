@@ -8,6 +8,6 @@ namespace Nagopia
     /// </summary>
     public abstract class BaseEvent
     {
-
+        public GameDataBase.EventType eventType=GameDataBase.EventType.INVALID;
     }
 }

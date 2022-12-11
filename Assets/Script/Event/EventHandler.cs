@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using MEC;
+using System.Media;
+using UnityEngine.UI;
+using Sirenix.OdinInspector;
+
 namespace Nagopia
 {
     public class EventHandler:SingletonMonobehaviour<EventHandler>
@@ -13,12 +17,43 @@ namespace Nagopia
             //    DestroyImmediate(this);
             //    return;
             //}
-            DontDestroyOnLoad(this);
-            battleManager=SingletonMonobehaviour<BattleManager>.Instance;
+        }
+
+        public void Start() {
+            this.uiCanvas = InGameManager.Instance.UiCanvas;
+            battleManager = SingletonMonobehaviour<BattleManager>.Instance;
+            this.battleUIRoot = this.uiCanvas.transform.Find("BattleUIGroup").gameObject;
+            if(ReferenceEquals(this.confirmMessageBox, null)) {
+                confirmMessageBox=GameObject.Find("ConfirmMessageRoot").GetComponent<ConfirmMessageBox>();
+            }
         }
 
         public void StartBattle(BattleStartEvent eventData,System.Action startFinishedCallback=null,System.Action battleEndCallback=null) {
-            SingletonMonobehaviour<BattleATBIndicator>.Instance.gameObject.SetActive(true);
+            Timing.RunCoroutine(StartBattleCoroutine(eventData, startFinishedCallback, battleEndCallback));
+        }
+
+        private IEnumerator<float>StartBattleCoroutine(BattleStartEvent eventData,System.Action startFinishedCallback=null,System.Action battleEndCallback = null) {
+            confirmMessageBox.ShowUp();
+            bool flag = false;
+            bool flag2 = false;
+            confirmMessageBox.AddConfirmCallback(() => { flag = true; flag2 = true; });
+            confirmMessageBox.AddCancelCallback(() => { flag = true; });
+            confirmMessageBox.ConfirmText = "开始战斗";
+            confirmMessageBox.CancelText= "Cancel";
+            confirmMessageBox.DescriptionText = "战斗遭遇";
+
+            yield return Timing.WaitUntilTrue(()=>flag);
+            confirmMessageBox.Hide();
+            if (!flag2) {
+                foreach (var item in eventData.EnemyTeam) {
+                    DestroyImmediate(item.avatar);
+                }
+                battleEndCallback?.Invoke();
+                yield break;
+            }
+            battleUIRoot.SetActive(true);
+            yield return Timing.WaitForOneFrame;
+            yield return Timing.WaitForOneFrame;
             battleManager.StartBattle(eventData.PlayerTeam, eventData.EnemyTeam, startFinishedCallback, battleEndCallback);
         }
 
@@ -81,6 +116,7 @@ namespace Nagopia
             flag = false;
             battleManager.CharacterAttack(data, () => flag = true);
             yield return Timing.WaitUntilTrue(() => flag);
+            //battleUIRoot.SetActive(false);
             completeCallback?.Invoke();
             outputEventInfo(data);
             yield break;
@@ -113,10 +149,10 @@ namespace Nagopia
             yield break;
         }
 
-        public void RestoreHPEventHandle(RestoreHPEvent restoreHP) {
+        public void RestoreHPEventHandle(RestoreHPEvent eventData,System.Action completeCallback=null) {
             var datas = TeamInfo.CharacterDatas;
-            bool isRate = restoreHP.IsRate;
-            float rate=restoreHP.Rate;
+            bool isRate = eventData.IsRate;
+            float rate=eventData.Rate;
             foreach (var item in datas) {
                 if (isRate) {
                     item.CurrentHP += (int)(item.CurrentHP * rate);
@@ -125,6 +161,91 @@ namespace Nagopia
                     item.CurrentHP += (int)rate;
                 }
             }
+            outputEventInfo(eventData);
+            completeCallback?.Invoke();
+        }
+
+        public void BattleWinEventHandler(BattleWinEvent eventData,System.Action completeCallback = null) {
+            battleUIRoot.SetActive(false);
+            outputEventInfo(eventData);
+            var enemies = eventData.enemies;
+            int expGained = 0;
+            foreach (var item in enemies) {
+                EnemyBattleCharacter enemy = item as EnemyBattleCharacter;
+                var data = enemy.data;
+                var rank = (int)data.rank+1;
+                expGained += rank * (int)(data.expRate * item.MaxHP);
+                Debug.Log($"exp:{expGained},rank={rank},reality={(int)(data.expRate*item.MaxHP)}");
+            }
+            ExpGainedEvent expGainedEvent = new ExpGainedEvent(expGained);
+            ExpGainedEventHandler(expGainedEvent, completeCallback);
+        }
+
+        public void GameOverEventHandler(GameOverEvent eventData,System.Action completeCallback=null) {
+
+        }
+
+        public void ExpGainedEventHandler(ExpGainedEvent eventData,System.Action completeCallback = null) {
+            var character = eventData.character;
+            int exp = eventData.exp;
+            outputEventInfo(eventData);
+            if (ReferenceEquals(character, null)) {
+                var allChara = TeamInfo.CharacterDatas;
+                foreach (var item in allChara) {
+                    if (item.CurrentHP > 0) {
+                        item.AddExp(exp);
+                    }
+                }
+                completeCallback?.Invoke();
+                return;
+            }
+            else {
+                var allChara = TeamInfo.CharacterDatas;
+                foreach (var item in allChara) {
+                    if (ReferenceEquals(item, character) && item.CurrentHP > 0) {
+                        item.AddExp(exp);
+                        break;
+                    }
+                }
+                completeCallback?.Invoke();
+            }
+        }
+
+        public void MeetNewTeammateHandler(GenerateNewTeammateEvent eventData,System.Action completeCallback=null) {
+            //confirmMessageBox.gameObject.SetActive(true);
+            confirmMessageBox.ShowUp();
+            var character = eventData.data;
+            NewTeammateJoinEvent joinEvent = new NewTeammateJoinEvent(character);
+            RefuseNewTeammate refuseEvent=new RefuseNewTeammate(character);
+            confirmMessageBox.AddConfirmCallback(() => NewTeammateJoinHandler(joinEvent,completeCallback));
+            confirmMessageBox.AddCancelCallback(() => RefuseNewTeammateJoinHandler(refuseEvent, completeCallback));
+            confirmMessageBox.ConfirmText = "确定";
+            confirmMessageBox.CancelText = "拒绝";
+            confirmMessageBox.DescriptionText = $"确定要{character.name}加入吗?";
+            outputEventInfo(eventData);
+        }
+
+        public void NewTeammateJoinHandler(NewTeammateJoinEvent eventData,System.Action completeCallback=null) {
+            TeamInfo.AddCharacter(eventData.character);
+            confirmMessageBox.Hide();
+            outputEventInfo(eventData);
+            completeCallback?.Invoke();
+        }
+
+        public void RefuseNewTeammateJoinHandler(RefuseNewTeammate eventData,System.Action completeCallback=null) {
+            confirmMessageBox.Hide();
+            outputEventInfo(eventData);
+            completeCallback?.Invoke();
+        }
+
+        public void NothingEventHandler(ref NothingHappenedEvent eventData,System.Action completeCallback=null) {
+            Timing.RunCoroutine(NothingButWaitCoroutine(eventData,completeCallback));
+        }
+
+        private IEnumerator<float> NothingButWaitCoroutine(NothingHappenedEvent eventData,System.Action completeCallback=null) {
+            outputEventInfo(eventData);
+            yield return Timing.WaitForSeconds(eventData.waitTime);
+            completeCallback?.Invoke();
         }
 
         public void outputEventInfo(BaseEvent baseEvent) {
@@ -134,5 +255,12 @@ namespace Nagopia
         private CoroutineHandle attackCoroutine;
 
         private BattleManager battleManager;
+
+        private Canvas uiCanvas;
+
+        private GameObject battleUIRoot;
+
+        [SerializeField]
+        private ConfirmMessageBox confirmMessageBox;
     }
 }

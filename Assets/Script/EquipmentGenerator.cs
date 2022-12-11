@@ -51,16 +51,16 @@ namespace Nagopia {
                     equipment = null;
                     break;
                 case GameDataBase.EquipmentType.HEAD:
-                    equipment = new HeadEquipment(ref template.requirements,template.prefab ,template.ItemRarity,template.Name);
+                    equipment = new HeadEquipment(ref template.requirements,template.image ,template.ItemRarity,template.Name);
                     break;
                 case GameDataBase.EquipmentType.CLOTH:
-                    equipment = new ClothEquipment(ref template.requirements,template.prefab, template.ItemRarity,template.Name);
+                    equipment = new ClothEquipment(ref template.requirements,template.image, template.ItemRarity,template.Name);
                     break;
                 case GameDataBase.EquipmentType.SHOES:
-                    equipment = new ShoesEquipment(ref template.requirements, template.prefab, template.ItemRarity,template.Name);
+                    equipment = new ShoesEquipment(ref template.requirements, template.image, template.ItemRarity,template.Name);
                     break;
                 case GameDataBase.EquipmentType.WEAPON:
-                    equipment = new WeaponEquipment(ref template.requirements, template.prefab, template.ItemRarity,template.Name);
+                    equipment = new WeaponEquipment(ref template.requirements, template.image, template.ItemRarity,template.Name);
                     break;
                 default:
                     equipment = null;

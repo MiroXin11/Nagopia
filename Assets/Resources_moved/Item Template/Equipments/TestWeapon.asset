@@ -15,7 +15,8 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 21300000, guid: 40aa06c3a755a634abe9f383a1fa1058, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -33,9 +34,9 @@ MonoBehaviour:
     - Name: equipmentType
       Entry: 3
       Data: 3
-    - Name: prefab
-      Entry: 6
-      Data: 
+    - Name: image
+      Entry: 10
+      Data: 0
     - Name: abilities
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[Nagopia.EquipmentAbility, Assembly-CSharp]],

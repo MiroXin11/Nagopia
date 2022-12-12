@@ -33,7 +33,19 @@ MonoBehaviour:
       Data: 2
     - Name: probability
       Entry: 4
-      Data: 1
+      Data: 0.8
+    - Name: ShowUPStage
+      Entry: 7
+      Data: Nagopia.MinMaxPair`1[[System.Int32, mscorlib]], Assembly-CSharp
+    - Name: min
+      Entry: 3
+      Data: 0
+    - Name: max
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: prefab
       Entry: 10
       Data: 0

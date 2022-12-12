@@ -87,8 +87,8 @@ namespace Nagopia {
             switch (text) {
                 case "弓箭手": { template = GameDataBase.GetCharaTemplate("RangerTemplate"); } break;
                 case "牧师": { template = GameDataBase.GetCharaTemplate("PriestTemplate"); }break;
-                case "勇士": { template = GameDataBase.GetCharaTemplate("KnightTemplate"); }break;
-                default: { template = GameDataBase.GetCharaTemplate("KnightTemplate"); }break;
+                case "勇士": { template = GameDataBase.GetCharaTemplate("WarriorTemplate"); }break;
+                default: { template = GameDataBase.GetCharaTemplate("WarriorTemplate"); }break;
             }
             int level = 3;
             PlayerCharacter playerCharacter = new PlayerCharacter(ref template, ref level);

@@ -15,7 +15,9 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 1967408743301452, guid: ff310c4f18b35f04eade317cac24efba, type: 3}
+    - {fileID: 21300000, guid: 274576951b4e7bc47841a4cb10389e2b, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -23,10 +25,10 @@ MonoBehaviour:
     SerializationNodes:
     - Name: adaptProf
       Entry: 3
-      Data: 0
+      Data: 3
     - Name: probability
       Entry: 4
-      Data: 0
+      Data: 0.8
     - Name: ShowUPStage
       Entry: 7
       Data: Nagopia.MinMaxPair`1[[System.Int32, mscorlib]], Assembly-CSharp
@@ -35,25 +37,25 @@ MonoBehaviour:
       Data: 0
     - Name: max
       Entry: 3
-      Data: 0
+      Data: 100
     - Name: 
       Entry: 8
       Data: 
     - Name: prefab
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: HeadImage
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 1
     - Name: PossiblePosition
       Entry: 7
       Data: Nagopia.MinMaxPair`1[[System.Int32, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 3
-      Data: 0
+      Data: 900
     - Name: max
       Entry: 3
-      Data: 0
+      Data: 999
     - Name: 
       Entry: 8
       Data: 
@@ -65,10 +67,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.UInt32, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 3
-      Data: 0
+      Data: 25
     - Name: max
       Entry: 3
-      Data: 0
+      Data: 40
     - Name: 
       Entry: 8
       Data: 
@@ -77,10 +79,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.UInt32, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 3
-      Data: 0
+      Data: 600
     - Name: max
       Entry: 3
-      Data: 0
+      Data: 1000
     - Name: 
       Entry: 8
       Data: 
@@ -89,10 +91,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.UInt32, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 3
-      Data: 0
+      Data: 45
     - Name: max
       Entry: 3
-      Data: 0
+      Data: 80
     - Name: 
       Entry: 8
       Data: 
@@ -101,10 +103,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.Single, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 4
-      Data: 0
+      Data: 1
     - Name: max
       Entry: 4
-      Data: 0
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -119,10 +121,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.UInt32, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 3
-      Data: 0
+      Data: 8
     - Name: max
       Entry: 3
-      Data: 0
+      Data: 16
     - Name: 
       Entry: 8
       Data: 
@@ -131,10 +133,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.UInt32, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 3
-      Data: 0
+      Data: 180
     - Name: max
       Entry: 3
-      Data: 0
+      Data: 240
     - Name: 
       Entry: 8
       Data: 
@@ -143,10 +145,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.UInt32, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 3
-      Data: 0
+      Data: 50
     - Name: max
       Entry: 3
-      Data: 0
+      Data: 70
     - Name: 
       Entry: 8
       Data: 
@@ -155,10 +157,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.Single, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 4
-      Data: 0
+      Data: 1
     - Name: max
       Entry: 4
-      Data: 0
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -173,10 +175,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.UInt32, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 3
-      Data: 0
+      Data: 8
     - Name: max
       Entry: 3
-      Data: 0
+      Data: 16
     - Name: 
       Entry: 8
       Data: 
@@ -185,10 +187,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.UInt32, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 3
-      Data: 0
+      Data: 200
     - Name: max
       Entry: 3
-      Data: 0
+      Data: 250
     - Name: 
       Entry: 8
       Data: 
@@ -197,10 +199,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.UInt32, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 3
-      Data: 0
+      Data: 50
     - Name: max
       Entry: 3
-      Data: 0
+      Data: 60
     - Name: 
       Entry: 8
       Data: 
@@ -209,10 +211,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.Single, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 4
-      Data: 0
+      Data: 1
     - Name: max
       Entry: 4
-      Data: 0
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -227,10 +229,10 @@ MonoBehaviour:
       Data: Nagopia.MinMaxPair`1[[System.UInt32, mscorlib]], Assembly-CSharp
     - Name: min
       Entry: 3
-      Data: 0
+      Data: 4
     - Name: max
       Entry: 3
-      Data: 0
+      Data: 8
     - Name: 
       Entry: 8
       Data: 

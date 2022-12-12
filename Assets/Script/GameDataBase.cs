@@ -259,6 +259,9 @@ namespace Nagopia {
 
             [InspectorName("牧师")]
             PRIEST,
+
+            [InspectorName("勇士")]
+            WARRIOR,
         }
 
         public enum ItemRarity {

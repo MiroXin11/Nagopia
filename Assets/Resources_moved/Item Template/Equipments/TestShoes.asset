@@ -33,7 +33,7 @@ MonoBehaviour:
     - Name: equipmentType
       Entry: 3
       Data: 2
-    - Name: prefab
+    - Name: image
       Entry: 6
       Data: 
     - Name: abilities
@@ -99,7 +99,7 @@ MonoBehaviour:
       Data: 1|Nagopia.ProfPair[], Assembly-CSharp
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 4
     - Name: 
       Entry: 7
       Data: Nagopia.ProfPair, Assembly-CSharp
@@ -130,6 +130,18 @@ MonoBehaviour:
     - Name: prof
       Entry: 3
       Data: 2
+    - Name: available
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: Nagopia.ProfPair, Assembly-CSharp
+    - Name: prof
+      Entry: 3
+      Data: 3
     - Name: available
       Entry: 5
       Data: true

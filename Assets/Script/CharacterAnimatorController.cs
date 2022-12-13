@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -24,7 +24,10 @@ namespace Nagopia {
         }
 
         [Button]
-        public virtual void Attack(Action onCompleteCallback = null) { }
+        public virtual void Attack(Action onCompleteCallback = null) {
+            animator.Play("Attacking");
+            this.AttackEndCallback= onCompleteCallback;
+        }
 
         public void OnAttackEnd() {
             ResetAnimation();
@@ -58,6 +61,12 @@ namespace Nagopia {
         public virtual void Fade(float endValue = 0f,float time = 0.5f,System.Action completeCallback=null) {
             foreach (var item in spriteRenderers) {
                 item.DOFade(endValue, time).SetEase(Ease.OutExpo).OnComplete(()=>completeCallback?.Invoke());
+            }
+        }
+
+        public virtual void SetRenderOrder(int order) {
+            foreach (var item in spriteRenderers) {
+                item.sortingOrder = order;
             }
         }
 

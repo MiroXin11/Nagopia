@@ -21,13 +21,14 @@ namespace Nagopia {
             if (Members.Contains(character) || Members.Count>=GameDataBase.Config.MaxTeamMember) {
                 return false;
             }
-            if (ReferenceEquals(parent, null)) {
-                parent = GameObject.FindGameObjectWithTag("MainCamera").transform;
+            if (ReferenceEquals(CharacterParent, null)) {
+                CharacterParent = GameObject.FindGameObjectWithTag("MainCamera").transform;
             }
             Members.Add(character);
-            AddCharacterEvent.Invoke(character);
-            character.obj.transform.SetParent(parent);
+            character.onAbilityChange.AddListener(ActAbilityAddEvent);
+            character.obj.transform.SetParent(CharacterParent);
             ResetPosition();
+            AddCharacterEvent.Invoke(character);
             return true;
         }
 
@@ -36,10 +37,11 @@ namespace Nagopia {
                 return false;
             }
             if (Members.Remove(character)) {
+                character.onAbilityChange.RemoveListener(ActAbilityAddEvent);
+                ResetPosition();
                 RemoveCharacterEvent.Invoke(character);
                 return true;
             }
-            ResetPosition();
             return false;
         }
 
@@ -72,6 +74,10 @@ namespace Nagopia {
             return false;
         }
 
+        private static void ActAbilityAddEvent(CharacterData data) {
+            CharacterAbilityChangeEvent.Invoke(data);
+        }
+
         public static CharacterData[] CharacterDatas { get { return Members.ToArray(); } }
 
         public static Equipment[] EquipmentDatas { get { return Equipments.ToArray();} }
@@ -84,8 +90,10 @@ namespace Nagopia {
 
         public static UnityEvent<Equipment> AddEquipmentEvent = new UnityEvent<Equipment>();
 
+        public static UnityEvent<CharacterData> CharacterAbilityChangeEvent = new UnityEvent<CharacterData>();
+
         public static Vector3[] InitialPosition = { new Vector3(-2, -3, 2), new Vector3(-4, -3, 2), new Vector3(-6, -3, 2), new Vector3(-8, -3, 2), new Vector3(-10, -3, 2) };
 
-        public static Transform parent;
+        public static Transform CharacterParent;
     }
 }

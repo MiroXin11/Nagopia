@@ -142,7 +142,7 @@ namespace Nagopia
                     finalProb=CalculateCalmnessInfluence(ref finalProb, ref underPressure, ref param);
                     if (RandomNumberGenerator.Happened(finalProb)&&data.rank<GameDataBase.EnemyRarity.BOSS) {
                         escape=new EscapeEvent(this);
-                        Debug.Log($"probability:{finalProb}");
+                        //Debug.Log($"probability:{finalProb}");
                     }
                 }
             }

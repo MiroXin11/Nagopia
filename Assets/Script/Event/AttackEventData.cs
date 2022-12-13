@@ -27,7 +27,8 @@ namespace Nagopia
 
         public override string ToString()
         {
-            return $"{attacker.Name} 攻击 {target.Name},造成伤害 {Damage}点,{target.Name} 剩余 {target.HP}点hp";
+            return $"{attacker.Name}尝试攻击{target.Name}";
+            //return $"{attacker.Name} 攻击 {target.Name},造成伤害 {Damage}点,{target.Name} 剩余 {target.HP}点hp";
         }
 
     }

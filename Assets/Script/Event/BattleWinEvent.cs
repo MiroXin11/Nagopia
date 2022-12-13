@@ -15,5 +15,9 @@ namespace Nagopia {
         public List<IBattleCharacter> players;
 
         public List<IBattleCharacter>enemies;
+
+        public override string ToString() {
+            return $"Õ½¶·Ê¤Àû";
+        }
     }
 }

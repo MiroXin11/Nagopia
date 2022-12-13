@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: AudioSources
+  m_EditorClassIdentifier: 
+  m_GroupName: AudioSources
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a0de8a2f48bdbf34b97b3bd3a92377ea
+  m_SerializeEntries:
+  - m_GUID: ba56b8e8ce12ac84c84640b07656f6ff
+    m_Address: Assets/Resources_moved/Audio/InGameAdventure.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Audios
+  - m_GUID: f055c317cb9d57e4c92d7303af4591aa
+    m_Address: Assets/Resources_moved/Audio/Openging(2).wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Audios
+  - m_GUID: adcd4a9a805d3294e8ae79108485a34b
+    m_Address: Assets/Resources_moved/Audio/Opening.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Audios
+  - m_GUID: af99acbff6885dc45bdee52b3ebb9c6b
+    m_Address: Assets/Resources_moved/Audio/Rest.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Audios
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e99fa8458a898e548bf079a14c502590, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 8ae25f726b388c74780c5374893f4eaf, type: 2}
+    - {fileID: 11400000, guid: 418f7370ff2ae384b8614953e2ca41b7, type: 2}

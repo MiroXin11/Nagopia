@@ -32,6 +32,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - CharacterTemplate
+  - m_GUID: ea72fdcb21fb1a246b4b670dfa3dd161
+    m_Address: Assets/Resources_moved/Chara Templates/WarriorTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CharacterTemplate
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e99fa8458a898e548bf079a14c502590, type: 2}
   m_SchemaSet:

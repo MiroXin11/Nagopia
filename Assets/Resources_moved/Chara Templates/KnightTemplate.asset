@@ -19,10 +19,10 @@ MonoBehaviour:
     - {fileID: 1000014030545600, guid: c29758dca8220b0438656507e3c79ab4, type: 3}
     - {fileID: 21300000, guid: d1c4846c0fba36f4a92f21dc617b1231, type: 3}
     - {fileID: 11400000}
-    - {fileID: 11400000, guid: 916e9717397642948bd4dc794d4f8fdb, type: 2}
-    - {fileID: 11400000, guid: f47536b55a8b2e74fbe9580298ea72a1, type: 2}
-    - {fileID: 11400000, guid: c43bf685a44a9a84e968948bec70dc3f, type: 2}
-    - {fileID: 11400000, guid: 71bef3a29195cb645abec8215eafbf78, type: 2}
+    - {fileID: 11400000, guid: c80d535d8a9534548923de741c76dbe1, type: 2}
+    - {fileID: 11400000, guid: 9397ef8eaf2cc614b9f63e9bcb246fdf, type: 2}
+    - {fileID: 11400000, guid: 21196ff4cef8a2248815450e56e3e9ae, type: 2}
+    - {fileID: 11400000, guid: 5d7831868e57e07409163dfb85e3f9cf, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -431,7 +431,7 @@ MonoBehaviour:
       Data: 4
     - Name: probability
       Entry: 4
-      Data: 0.9
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -460,7 +460,7 @@ MonoBehaviour:
       Data: 5
     - Name: probability
       Entry: 4
-      Data: 0.9
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -489,7 +489,7 @@ MonoBehaviour:
       Data: 6
     - Name: probability
       Entry: 4
-      Data: 0.9
+      Data: 1
     - Name: 
       Entry: 8
       Data: 

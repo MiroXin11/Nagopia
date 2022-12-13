@@ -13,49 +13,12 @@ MonoBehaviour:
   m_Name: DefaultTeam
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 0101040000007400650061006d002f000000000155000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b004e00610067006f007000690061002e0045006e0065006d007900540065006d0070006c006100740065002c00200041007300730065006d0062006c0079002d004300530068006100720070005d005d002c0020006d00730063006f0072006c0069006200000000000601000000000000000c00000000070501010e0000006100700070006500720061006e0063006500530074006100670065002f010000000118000000530079007300740065006d002e0049006e007400330032005b005d002c0020006d00730063006f0072006c006900620001000000080300000004000000000000000100000064000000051d010b0000006400650073006300720069006200740069006f006e000200000000000000
     ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 41eb96ac45314fc428ebb8a4e67aa24e, type: 2}
+    - {fileID: 11400000, guid: fed864c8d698ac24895a8d056a721dd7, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: team
-      Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[Nagopia.EnemyTemplate, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: apperanceStage
-      Entry: 7
-      Data: 1|System.Int32[], mscorlib
-    - Name: 
-      Entry: 14
-      Data: 2
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: 100
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: describtion
-      Entry: 3
-      Data: 2
+    SerializationNodes: []

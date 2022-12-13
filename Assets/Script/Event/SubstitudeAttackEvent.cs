@@ -17,7 +17,7 @@ namespace Nagopia {
         public IBattleCharacter originalTarget;
 
         public override string ToString() {
-            return $"{attacker.Name} tried to kill {originalTarget.Name},but {newTarget.Name} guarded {originalTarget.Name}";
+            return $"{attacker.Name}尝试攻击{originalTarget.Name},但{newTarget.Name}保护了{originalTarget.Name}";
         }
     }
 }

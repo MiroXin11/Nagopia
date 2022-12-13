@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UnityEngine.Events;
 
 namespace Nagopia {
 
@@ -10,15 +11,18 @@ namespace Nagopia {
         public CharacterData(ref CharaProfTemplate template,ref int level,List<RelationData>initialRelation=null,string name="") {
             if (string.Equals(name, "")) {
                 this.name = GameDataBase.GetRandomName();
-                if (string.Equals(this.name, "Miro") || string.Equals(this.name, "符成杰")) {
-                    var BugTemplate = GameDataBase.GetCharaTemplate("MiroTemplate");
-                    if(!ReferenceEquals(BugTemplate, null)) {
-                        template= BugTemplate;
-                    }
-                }
             }
             else {
                 this.name = name;
+            }
+            if (string.Equals(this.name, "Miro") || string.Equals(this.name, "符成杰")) {
+                var BugTemplate = GameDataBase.GetCharaTemplate("KnightTemplate");
+                if (!ReferenceEquals(BugTemplate, null)) {
+                    template = BugTemplate;
+                }
+            }
+            if(level<=0) {
+                level = GameDataBase.GameStage;
             }
             this.profession = template.AdaptProf;
             this.Position = RandomNumberGenerator.Average_GetRandomNumber(template.PossiblePosition.min, template.PossiblePosition.max);
@@ -55,7 +59,7 @@ namespace Nagopia {
         /// </summary>
         public uint HPMaxValue { get { return HPCurve.GetValue(ref level); } }
 
-        public int CurrentHP { get { return currentHP; } set { currentHP = Mathf.Clamp(value, 0, (int)HPMaxValue); } }
+        public int CurrentHP { get { return currentHP; } set { currentHP = Mathf.Clamp(value, 0, (int)HPMaxValue); onAbilityChange.Invoke(this); } }
 
         private int currentHP;
 
@@ -90,7 +94,7 @@ namespace Nagopia {
         public uint SPE { get { return SPECurve.GetValue(ref level); } }
 
 
-        public int Position { get { return position; } set { position = Mathf.Clamp(value, GameDataBase.Config.MinPosition, GameDataBase.Config.MaxPosition); } }
+        public int Position { get { return position; } set { position = Mathf.Clamp(value, GameDataBase.Config.MinPosition, GameDataBase.Config.MaxPosition);} }
 
         private int position;
 
@@ -111,6 +115,8 @@ namespace Nagopia {
         public int ExpToNextLevel => 50 * level;
 
         public void AddExp(int gain) {
+            bool levelUpFlag = false;
+            int originalLevel = level;
             while (gain > 0) {
                 int difference = ExpToNextLevel - exp;
                 if (difference > gain) {//获得的经验未达到升级所需要的经验
@@ -121,7 +127,13 @@ namespace Nagopia {
                     exp = 0;
                     gain -= difference;
                     ++level;
+                    levelUpFlag= true;
                 }
+            }
+            onAbilityChange.Invoke(this);
+            if (levelUpFlag) {
+                CharacterLevelUpEvent levelUpEvent= new CharacterLevelUpEvent(this,ref originalLevel);
+                SingletonMonobehaviour<EventHandler>.Instance.CharacterLevelUpHandler(levelUpEvent);
             }
         }
 
@@ -175,6 +187,7 @@ namespace Nagopia {
             if(ReferenceEquals(equipment,null)||equipment.ValidateProf(ref profession)) {
                 oldEquipment = head;
                 head = equipment;
+                onAbilityChange.Invoke(this);
                 return true;
             }
             oldEquipment = null;
@@ -189,6 +202,7 @@ namespace Nagopia {
             if (ReferenceEquals(equipment, null) || equipment.ValidateProf(ref profession)) {
                 oldEquipment = this.weapon;
                 this.weapon = equipment;
+                onAbilityChange.Invoke(this);
                 return true;
             }
             oldEquipment = null;
@@ -203,6 +217,7 @@ namespace Nagopia {
             if (ReferenceEquals(equipment, null) || equipment.ValidateProf(ref profession)) {
                 oldEquipment = this.cloth;
                 this.cloth = equipment;
+                onAbilityChange.Invoke(this);
                 return true;
             }
             oldEquipment = null;
@@ -217,6 +232,7 @@ namespace Nagopia {
             if (ReferenceEquals(equipment, null) || equipment.ValidateProf(ref profession)) {
                 oldEquipment = this.shoes;
                 this.shoes = equipment;
+                onAbilityChange.Invoke(this);
                 return true;
             }
             oldEquipment = null;
@@ -323,6 +339,8 @@ namespace Nagopia {
             string equipment = $"{HeadString}{ClothString}{ShoesString}{WeaponString}";
             return property+equipment;
         }
+
+        public UnityEvent<CharacterData> onAbilityChange = new UnityEvent<CharacterData>();
     }
 
     /// <summary>

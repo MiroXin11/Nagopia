@@ -250,6 +250,15 @@ namespace Nagopia {
                         SingletonMonobehaviour<EventHandler>.Instance.CureEventHandle(ref cureEvent, () => completeCallback?.Invoke());
                         break;
                     }
+                case GameDataBase.CharacterProfession.WARRIOR: {
+                        target = battleInfo.enemy_sortByPos[0];//骑士的攻击选择敌方最近的目标
+                        int damage = BattleManager.CalculateDamage(this, target);
+                        BattleInfo info = SingletonMonobehaviour<BattleManager>.Instance.GetBattleInfo(this);
+                        IBattleCharacter attacker = this;
+                        AttackEventData attackEvent = new AttackEventData(ref attacker, ref target, damage, ref info, ComfirmAttackAnimationType());
+                        SingletonMonobehaviour<EventHandler>.Instance.AttackEventHandle(attackEvent, () => completeCallback?.Invoke());
+                        break;
+                    }
                 default:
                     completeCallback?.Invoke();
                     break;
@@ -297,6 +306,8 @@ namespace Nagopia {
                     return GameDataBase.AttackAnimationType.REMOTE;
                 case GameDataBase.CharacterProfession.PRIEST:
                     return GameDataBase.AttackAnimationType.REMOTE;
+                case GameDataBase.CharacterProfession.WARRIOR:
+                    return GameDataBase.AttackAnimationType.CLOSE;
                 default:
                     return GameDataBase.AttackAnimationType.REMOTE;
             }

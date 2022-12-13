@@ -19,10 +19,16 @@ MonoBehaviour:
     - {fileID: 1565018944957270, guid: 56f4a472afb14ee42ae46d59c8f10c54, type: 3}
     - {fileID: 21300000, guid: ccfd3babd6cd2544a946d723085336ec, type: 3}
     - {fileID: 11400000}
-    - {fileID: 11400000, guid: 916e9717397642948bd4dc794d4f8fdb, type: 2}
-    - {fileID: 11400000, guid: f47536b55a8b2e74fbe9580298ea72a1, type: 2}
-    - {fileID: 11400000, guid: c43bf685a44a9a84e968948bec70dc3f, type: 2}
-    - {fileID: 11400000, guid: 71bef3a29195cb645abec8215eafbf78, type: 2}
+    - {fileID: 11400000, guid: 6db4f326cc4a94b47a0c3b7515c6f1a3, type: 2}
+    - {fileID: 11400000, guid: a5c8f95d6537acc428e8859621ce77d9, type: 2}
+    - {fileID: 11400000, guid: f22af4491b0687849aa12e9e67ff6e6b, type: 2}
+    - {fileID: 11400000, guid: 673e6a1c289c1bf4f8e7924c1423e13f, type: 2}
+    - {fileID: 11400000, guid: 5d10270dc5af12c44941dc627facf5ba, type: 2}
+    - {fileID: 11400000, guid: c953726a1e6256d47a5caaf57eaf61ab, type: 2}
+    - {fileID: 11400000, guid: 8d97049c89cbbac40a1b2e2767c5f9d2, type: 2}
+    - {fileID: 11400000, guid: 84c2f35b50120d445b875f840fd5057a, type: 2}
+    - {fileID: 11400000, guid: 995efc3c846955d42a6bd2f8865e9b7e, type: 2}
+    - {fileID: 11400000, guid: ae43bc2742e651f418b9cc19af47e8f4, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -362,7 +368,7 @@ MonoBehaviour:
         Assembly-CSharp]], Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 3
     - Name: 
       Entry: 7
       Data: Nagopia.ProbableEquipmentPair`1[[Nagopia.HeadEquipmentTemplate, Assembly-CSharp]],
@@ -375,7 +381,39 @@ MonoBehaviour:
       Data: 3
     - Name: probability
       Entry: 4
-      Data: 1
+      Data: 0.6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: Nagopia.ProbableEquipmentPair`1[[Nagopia.HeadEquipmentTemplate, Assembly-CSharp]],
+        Assembly-CSharp
+    - Name: template
+      Entry: 10
+      Data: 2
+    - Name: Equipment
+      Entry: 10
+      Data: 4
+    - Name: probability
+      Entry: 4
+      Data: 0.3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: Nagopia.ProbableEquipmentPair`1[[Nagopia.HeadEquipmentTemplate, Assembly-CSharp]],
+        Assembly-CSharp
+    - Name: template
+      Entry: 10
+      Data: 2
+    - Name: Equipment
+      Entry: 10
+      Data: 5
+    - Name: probability
+      Entry: 4
+      Data: 0.1
     - Name: 
       Entry: 8
       Data: 
@@ -391,7 +429,7 @@ MonoBehaviour:
         Assembly-CSharp]], Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 3
     - Name: 
       Entry: 7
       Data: Nagopia.ProbableEquipmentPair`1[[Nagopia.ClothEquipmentTemplate, Assembly-CSharp]],
@@ -401,10 +439,42 @@ MonoBehaviour:
       Data: 2
     - Name: Equipment
       Entry: 10
-      Data: 4
+      Data: 6
     - Name: probability
       Entry: 4
-      Data: 1
+      Data: 0.6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: Nagopia.ProbableEquipmentPair`1[[Nagopia.ClothEquipmentTemplate, Assembly-CSharp]],
+        Assembly-CSharp
+    - Name: template
+      Entry: 10
+      Data: 2
+    - Name: Equipment
+      Entry: 10
+      Data: 7
+    - Name: probability
+      Entry: 4
+      Data: 0.3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: Nagopia.ProbableEquipmentPair`1[[Nagopia.ClothEquipmentTemplate, Assembly-CSharp]],
+        Assembly-CSharp
+    - Name: template
+      Entry: 10
+      Data: 2
+    - Name: Equipment
+      Entry: 10
+      Data: 8
+    - Name: probability
+      Entry: 4
+      Data: 0.1
     - Name: 
       Entry: 8
       Data: 
@@ -420,7 +490,7 @@ MonoBehaviour:
         Assembly-CSharp]], Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 3
     - Name: 
       Entry: 7
       Data: Nagopia.ProbableEquipmentPair`1[[Nagopia.ShoesEquipmentTemplate, Assembly-CSharp]],
@@ -430,10 +500,42 @@ MonoBehaviour:
       Data: 2
     - Name: Equipment
       Entry: 10
-      Data: 5
+      Data: 9
     - Name: probability
       Entry: 4
-      Data: 1
+      Data: 0.6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: Nagopia.ProbableEquipmentPair`1[[Nagopia.ShoesEquipmentTemplate, Assembly-CSharp]],
+        Assembly-CSharp
+    - Name: template
+      Entry: 10
+      Data: 2
+    - Name: Equipment
+      Entry: 10
+      Data: 10
+    - Name: probability
+      Entry: 4
+      Data: 0.3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: Nagopia.ProbableEquipmentPair`1[[Nagopia.ShoesEquipmentTemplate, Assembly-CSharp]],
+        Assembly-CSharp
+    - Name: template
+      Entry: 10
+      Data: 2
+    - Name: Equipment
+      Entry: 10
+      Data: 11
+    - Name: probability
+      Entry: 4
+      Data: 0.1
     - Name: 
       Entry: 8
       Data: 
@@ -459,7 +561,7 @@ MonoBehaviour:
       Data: 2
     - Name: Equipment
       Entry: 10
-      Data: 6
+      Data: 12
     - Name: probability
       Entry: 4
       Data: 0.8

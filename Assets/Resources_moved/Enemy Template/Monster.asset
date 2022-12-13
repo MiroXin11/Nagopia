@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b1a1202cc244a4b81e4c4fe27b7839, type: 3}
+  m_Name: Monster
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 1358308889785226, guid: 10ad64feef2f0394c870f22eab8baf07, type: 3}
+    - {fileID: 21300000, guid: a8b0909af2fb51642a9d394440c6b3b2, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: rank
+      Entry: 3
+      Data: 10
+    - Name: duty
+      Entry: 3
+      Data: 0
+    - Name: attackAnimationType
+      Entry: 3
+      Data: 0
+    - Name: exp_rate
+      Entry: 4
+      Data: 5
+    - Name: Name
+      Entry: 6
+      Data: 
+    - Name: prefab
+      Entry: 10
+      Data: 0
+    - Name: HeadImage
+      Entry: 10
+      Data: 1
+    - Name: HP_Rate
+      Entry: 4
+      Data: 0.4
+    - Name: BasisHP
+      Entry: 4
+      Data: 30
+    - Name: ATK_Rate
+      Entry: 4
+      Data: 0.15
+    - Name: BasisATK
+      Entry: 4
+      Data: 5
+    - Name: DEF_Rate
+      Entry: 4
+      Data: 0.15
+    - Name: BasisDEF
+      Entry: 4
+      Data: 5
+    - Name: SPE_Rate
+      Entry: 4
+      Data: 0.15
+    - Name: BasisSPE
+      Entry: 4
+      Data: 5
+    - Name: Position
+      Entry: 3
+      Data: 100
+    - Name: MentalRange
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[Nagopia.GameDataBase+MentalType,
+        Assembly-CSharp],[Nagopia.MinMaxPair`1[[System.Byte, mscorlib]], Assembly-CSharp]],
+        mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Nagopia.GameDataBase+MentalType,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 

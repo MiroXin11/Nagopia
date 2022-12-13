@@ -15,7 +15,7 @@ namespace Nagopia {
             int maxMember = GameDataBase.Config.MaxTeamMember;
             for (int i = 0; i < maxMember; ++i) {
                 this.PlayerCharaPosition.Add(new Vector3(-1.2f - 1.5f * i, -2f, 2f));
-                this.EnemyCharaPosition.Add(new Vector3(1.2f + 1.5f * i, -2f, 2f));
+                this.EnemyCharaPosition.Add(new Vector3(1.2f + 1.5f * i, -2f, 3f));
             }
         }
 
@@ -107,7 +107,9 @@ namespace Nagopia {
                     var character = allUsableCharacter[i];
                     bool ATBupdateFinish = false;
                     UpdateATB(character, () => ATBupdateFinish = true);
+                    Debug.Log("BeforeUpdate");
                     yield return Timing.WaitUntilTrue(() => ATBupdateFinish);
+                    Debug.Log("UpdateFinish");
                     flag = ValidateOver();
                     if (flag) {
                         break;
@@ -123,6 +125,9 @@ namespace Nagopia {
             Debug.Log($"win_flag={win_flag}");
             if (this.win_flag) {
                 BattleWinEvent battleWin = new BattleWinEvent(playerTeam, enemyTeam);
+                foreach (var item in enemyTeam) {
+                    GameObject.DestroyImmediate(item.avatar);
+                }
                 onBattleEnd.Invoke(GetBattleInfo(playerTeam[0]));
                 eventHandler.BattleWinEventHandler(battleWin, () => { finishedCallback?.Invoke(); });
                 yield break;
@@ -136,6 +141,8 @@ namespace Nagopia {
 
         private void UpdateATB(IBattleCharacter character, Action updateFinishCallback = null) {
             if (character.HP <= 0) {
+                updateFinishCallback?.Invoke();
+                SetCharaToBeClean(character);
                 return;
             }
             character.ATB += updateFrequency * (ATBUpPerSec + character.SPE * 3.0f);
@@ -181,7 +188,6 @@ namespace Nagopia {
                     break;
                 }
             }
-            //Debug.Log($"flag={flag}");
             if (!flag) {//flag为false时，敌人全灭
                 win_flag = true;//win_flag赋值为true
                 return true;
@@ -252,8 +258,8 @@ namespace Nagopia {
             SetCharaToBeClean(character);
             var transform = character.avatar.transform;
             float pos = JudgePlayerEnemy[character] ? transform.position.x - 2.0f : transform.position.x + 2.0f;
-            transform.DOLocalMoveX(pos, 0.55f);
-            character.animatorController.Fade(0f, 0.55f, () => completeCallback?.Invoke());
+            character.animatorController.Fade(0f, 0.55f);
+            transform.DOLocalMoveX(pos, 0.55f).OnComplete(() => { completeCallback?.Invoke();Debug.Log($"Error?{completeCallback==null}");onCharacterDefeated.Invoke(character); });
         }
 
         public void SubstitudeAttack(SubstitudeAttackEvent eventData, System.Action completeCallback) {
@@ -271,7 +277,6 @@ namespace Nagopia {
             flag = false;
             eventData.attacker.animatorController.Attack(() => flag = true);
             yield return Timing.WaitUntilTrue(() => flag);
-            //int damage = substituder.HP - (int)eventData.attacker.ATK;
             int damage = CalculateDamage(eventData.attacker, substituder);
             CharacterHurt(ref eventData.attacker, ref substituder, damage, () => flag = false);
             yield return Timing.WaitUntilFalse(() => flag);
@@ -295,7 +300,7 @@ namespace Nagopia {
 
             CharacterHurt(ref eventData.attacker, ref eventData.target, eventData.Damage, () => flag = false);//角色受击结算并播放受伤动画
             yield return Timing.WaitUntilFalse(() => flag);
-            yield return Timing.WaitForSeconds(2f);
+            yield return Timing.WaitForSeconds(0.6f);
             ResetCharaPosition(eventData.attacker, 0.15f, completeCallback: () => { completeCallback?.Invoke(); });//重置角色位置并完成回调函数
             //yield return Timing.WaitForSeconds(0.5f);
         }
@@ -330,7 +335,7 @@ namespace Nagopia {
                 }
                 var animatorController = eventData.attacker.animatorController;
                 animatorController.StartWalking();
-                attackerTransform.DOMove(targetPos, 0.25f).OnComplete(() => { animatorController.ResetAnimation(); completeCallback?.Invoke(); });
+                attackerTransform.DOMoveX(targetPos.x, 0.25f).OnComplete(() => { animatorController.ResetAnimation(); completeCallback?.Invoke(); });
             }
         }
 
@@ -358,15 +363,51 @@ namespace Nagopia {
         }
 
         private void CharacterHurt(ref IBattleCharacter attacker, ref IBattleCharacter target, int damage, System.Action completeCallback = null) {
+            Timing.RunCoroutine(HurtCoroutineHandler(attacker,target,damage, completeCallback));
+            //target.HP -= damage;
+            //if (target.HP <= 0) {//角色已死
+            //    if (!JudgePlayerEnemy[target]) {//敌人角色
+            //        target.animatorController.Die();
+            //        target.animatorController.Fade(time:0.3f, completeCallback:() => completeCallback?.Invoke());
+            //        eventHandler.outputEventInfo(new CharacterDeathEvent(target, attacker));
+            //        onCharacterDefeated.Invoke(target);
+            //        return;
+            //    }
+
+            //    //玩家阵营角色
+            //    double fixedParam = 1.0 + (damage * 1.0 / attacker.MaxHP);
+            //    if (RandomNumberGenerator.Happened(fixedParam * GameDataBase.Config.CharacterDiedProbability)) {//角色直接死亡
+            //        CharacterDeathEvent deathEvent = new CharacterDeathEvent(target, attacker);
+            //        eventHandler.outputEventInfo(deathEvent);
+            //        //TeamInfo.RemoveCharacter((target as BattleCharacter).data);
+            //        target.animatorController.Die();
+            //        target.animatorController.Fade(time:0.3f, completeCallback: () => completeCallback?.Invoke());
+            //        onCharacterDefeated.Invoke(target);
+            //    }
+            //    else {
+            //        CharacterDefeatedEvent defeatedEvent = new CharacterDefeatedEvent(target, attacker);
+            //        eventHandler.outputEventInfo(defeatedEvent);
+            //        target.animatorController.Fade(time: 0.3f, completeCallback: () => completeCallback?.Invoke());
+            //        onCharacterDefeated.Invoke(target);
+            //    }
+            //}
+            //else {
+            //    target.animatorController.Hurt(() => completeCallback?.Invoke());
+            //    CharacterHurtEvent characterHurtEvent = new CharacterHurtEvent(target, damage);
+            //    eventHandler.outputEventInfo(characterHurtEvent);
+            //}
+        }
+
+        private IEnumerator<float> HurtCoroutineHandler(IBattleCharacter attacker,IBattleCharacter target,int damage,System.Action completeCallback=null) {
             target.HP -= damage;
-            //Debug.Log($"HP:{target.HP}");
             if (target.HP <= 0) {//角色已死
                 if (!JudgePlayerEnemy[target]) {//敌人角色
                     target.animatorController.Die();
-                    target.animatorController.Fade(time:0.3f, completeCallback:() => completeCallback?.Invoke());
+                    yield return Timing.WaitForSeconds(0.5f);
+                    target.animatorController.Fade(time: 0.3f, completeCallback: () => completeCallback?.Invoke());
                     eventHandler.outputEventInfo(new CharacterDeathEvent(target, attacker));
                     onCharacterDefeated.Invoke(target);
-                    return;
+                    yield break;
                 }
 
                 //玩家阵营角色
@@ -374,15 +415,17 @@ namespace Nagopia {
                 if (RandomNumberGenerator.Happened(fixedParam * GameDataBase.Config.CharacterDiedProbability)) {//角色直接死亡
                     CharacterDeathEvent deathEvent = new CharacterDeathEvent(target, attacker);
                     eventHandler.outputEventInfo(deathEvent);
+                    yield return Timing.WaitForSeconds(0.5f);
                     //TeamInfo.RemoveCharacter((target as BattleCharacter).data);
                     target.animatorController.Die();
-                    target.animatorController.Fade(time:0.3f, completeCallback: () => completeCallback?.Invoke());
+                    target.animatorController.Fade(time: 0.3f, completeCallback: () => completeCallback?.Invoke());
                     onCharacterDefeated.Invoke(target);
                 }
                 else {
                     CharacterDefeatedEvent defeatedEvent = new CharacterDefeatedEvent(target, attacker);
                     eventHandler.outputEventInfo(defeatedEvent);
                     target.animatorController.Fade(time: 0.3f, completeCallback: () => completeCallback?.Invoke());
+                    yield return Timing.WaitForSeconds(0.8f);
                     onCharacterDefeated.Invoke(target);
                 }
             }
@@ -391,6 +434,7 @@ namespace Nagopia {
                 CharacterHurtEvent characterHurtEvent = new CharacterHurtEvent(target, damage);
                 eventHandler.outputEventInfo(characterHurtEvent);
             }
+            yield break;
         }
 
         public void CharacterCure(ref CureEvent cureEvent, System.Action completeCallback = null) {

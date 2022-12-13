@@ -26,6 +26,7 @@ namespace Nagopia
             if(ReferenceEquals(this.confirmMessageBox, null)) {
                 confirmMessageBox=GameObject.Find("ConfirmMessageRoot").GetComponent<ConfirmMessageBox>();
             }
+            //this.uiManager = SingletonMonobehaviour<InGameUIManager>.Instance;
         }
 
         public void StartBattle(BattleStartEvent eventData,System.Action startFinishedCallback=null,System.Action battleEndCallback=null) {
@@ -79,7 +80,7 @@ namespace Nagopia
             var attackerAvatar = data.attacker.avatar;
             bool flag = false;
             var target = data.target;
-
+            data.attacker.animatorController.SetRenderOrder(4);
             //角色移动到攻击目标处并检查受击目标有无逃跑事件
             battleManager.AttackCharaMove(data, () => flag = true);
             target.UnderAttack(data, out var escape);
@@ -91,8 +92,9 @@ namespace Nagopia
                 bool t = false;
                 var handle = Timing.RunCoroutine(CharacterEscapeCoroutine(escape,()=>t=true));
                 yield return Timing.WaitUntilTrue(() => t);
-                completeCallback?.Invoke();
+                //Debug.Log($"Part3:{ReferenceEquals(completeCallback,null)}");
                 battleManager.ResetCharaPosition(data.attacker);
+                completeCallback?.Invoke();
                 yield break;
             }
 
@@ -117,13 +119,15 @@ namespace Nagopia
             battleManager.CharacterAttack(data, () => flag = true);
             yield return Timing.WaitUntilTrue(() => flag);
             //battleUIRoot.SetActive(false);
+            data.attacker.animatorController.SetRenderOrder(0);
             completeCallback?.Invoke();
-            outputEventInfo(data);
+            //outputEventInfo(data);
             yield break;
         }
 
         public void CharacterEscapeEventHandle(ref EscapeEvent escape,System.Action completeCallback=null) {
-            battleManager.CharacterEscape(escape.character,completeCallback);
+            //battleManager.CharacterEscape(escape.character,completeCallback);
+            Timing.RunCoroutine(CharacterEscapeCoroutine(escape,completeCallback));
         }
 
         private IEnumerator<float> CharacterEscapeCoroutine(EscapeEvent eventData,System.Action completeCallback=null) {
@@ -131,6 +135,7 @@ namespace Nagopia
             bool flag = false;
             battleManager.CharacterEscape(character, () => { flag = true; });
             yield return Timing.WaitUntilTrue(() => flag);
+            Debug.Log($"Part2{ReferenceEquals(completeCallback,null)}");
             completeCallback?.Invoke(); 
             outputEventInfo(eventData);
             yield break;
@@ -167,7 +172,7 @@ namespace Nagopia
 
         public void BattleWinEventHandler(BattleWinEvent eventData,System.Action completeCallback = null) {
             battleUIRoot.SetActive(false);
-            outputEventInfo(eventData);
+            //outputEventInfo(eventData);
             var enemies = eventData.enemies;
             int expGained = 0;
             foreach (var item in enemies) {
@@ -222,7 +227,7 @@ namespace Nagopia
             confirmMessageBox.ConfirmText = "确定";
             confirmMessageBox.CancelText = "拒绝";
             confirmMessageBox.DescriptionText = $"确定要{character.name}加入吗?";
-            outputEventInfo(eventData);
+            //outputEventInfo(eventData);
         }
 
         public void NewTeammateJoinHandler(NewTeammateJoinEvent eventData,System.Action completeCallback=null) {
@@ -248,8 +253,12 @@ namespace Nagopia
             completeCallback?.Invoke();
         }
 
+        public void CharacterLevelUpHandler(CharacterLevelUpEvent eventData) {
+            outputEventInfo(eventData);
+        }
+
         public void outputEventInfo(BaseEvent baseEvent) {
-            Debug.Log(baseEvent.ToString());
+            uiManager.infoShower.AddNewInfo(baseEvent.ToString());
         }
 
         private CoroutineHandle attackCoroutine;
@@ -262,5 +271,8 @@ namespace Nagopia
 
         [SerializeField]
         private ConfirmMessageBox confirmMessageBox;
+
+        [SerializeField]
+        private InGameUIManager uiManager;
     }
 }

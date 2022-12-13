@@ -14,6 +14,16 @@ namespace Nagopia {
             this.RestUIGroup = uiCanvas.transform.Find("RestUIGroup").gameObject;
         }
 
+        private void FixedUpdate() {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                ExitGame();
+            }
+        }
+
+        public void ExitGame() {
+            Application.Quit();
+        }
+
         private void SelectEvent() {
             int stage = GameDataBase.GameStage;
             if (stage % 3 == 0) {//留给特殊事件
@@ -24,11 +34,12 @@ namespace Nagopia {
                     return;
                 }
                 else if (RandomNumberGenerator.Happened(config.RestoreProbability)) {
+                    audioPlayer.PlayOnce("Rest");
                     RestoreHPEvent restoreHPEvent = new RestoreHPEvent(1.0f, true);
                     eventHandler.RestoreHPEventHandle(restoreHPEvent, () => EndEvent());
                     return;
                 }
-                NothingHappenedEvent nothingHappened = new NothingHappenedEvent(4f);
+                NothingHappenedEvent nothingHappened = new NothingHappenedEvent(2f);
                 eventHandler.NothingEventHandler(ref nothingHappened,() => EndEvent());
                 return;
             }
@@ -62,6 +73,7 @@ namespace Nagopia {
         }
 
         private IEnumerator<float> WalkToNextScene() {
+            TeamInfo.ResetPosition();
             this.RestUIGroup.gameObject.SetActive(false);
             yield return Timing.WaitForOneFrame;
             var character = TeamInfo.CharacterDatas;
@@ -81,6 +93,8 @@ namespace Nagopia {
         }
 
         public void FirstGameStart() {
+            audioPlayer.PlayAudioClip("InGameAdventure");
+            this.GameStartShowerCamera.gameObject.SetActive(false);
             RandomNumberGenerator.InitialRandom();
             var text = createGroup.introduction.text;
             CharaProfTemplate template;
@@ -91,9 +105,11 @@ namespace Nagopia {
                 default: { template = GameDataBase.GetCharaTemplate("WarriorTemplate"); }break;
             }
             int level = 3;
-            PlayerCharacter playerCharacter = new PlayerCharacter(ref template, ref level);
-            TeamInfo.AddCharacter(playerCharacter);
+            text = createGroup.NameField.text;
+            PlayerCharacter playerCharacter = new PlayerCharacter(ref template, ref level, name: text);
             createGroup.gameObject.SetActive(false);
+            normalUIGroup.gameObject.SetActive(true);
+            TeamInfo.AddCharacter(playerCharacter);
             StartEvent();
         }
 
@@ -110,6 +126,14 @@ namespace Nagopia {
 
         [SerializeField]
         private BackgroundManager bgManager;
+
+        [SerializeField]
+        private GameObject normalUIGroup;
+
+        [SerializeField]
+        private AudioManager audioPlayer;
+
+        public Camera GameStartShowerCamera;
     }
 
 }

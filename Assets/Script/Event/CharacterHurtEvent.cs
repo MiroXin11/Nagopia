@@ -12,7 +12,7 @@ namespace Nagopia {
         public int damage;
 
         public override string ToString() {
-            return $"{victim.Name} lost HP {damage},current HP is {victim.HP}";
+            return $"{victim.Name}受到{damage}点伤害,剩余血量{victim.HP}";
         }
     }
 }

@@ -19,7 +19,8 @@ namespace Nagopia {
                 for(int i = 0; i < count; ++i) {
                     var tmp = filter[i];
                     if (RandomNumberGenerator.Happened(tmp.Probability)) {
-                        this.data=new CharacterData(ref tmp,ref stage); 
+                        //this.data=new CharacterData(ref tmp,ref stage);
+                        this.data=CharacterGenerator.GenerateCharacter(tmp, stage);
                         break;
                     }
                 }

@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 using System;
 using System.Linq;
 using UnityEditor;
+using System.Runtime.CompilerServices;
 
 namespace Nagopia {
     public class GameDataBase {
@@ -15,7 +16,7 @@ namespace Nagopia {
         /// <summary>
         /// 可能会有几段代码在MonoBehaviour的Awake中调用，但实际游戏中会自动运行
         /// </summary>
-       [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         public static void Initialize() {
             if (hasIni)
                 return;
@@ -23,6 +24,7 @@ namespace Nagopia {
             InitializeItem();
             InitializeProfTemplate();
             InitializeEnemyTemplate();
+            LoadALlAudioClips();
             TeamInfo.Initialize();//这个实际上需要读取存档才可以
             hasIni = true;
         }
@@ -43,10 +45,10 @@ namespace Nagopia {
             var MentalBuffCeiling = config.MentalBuffCeiling;
             var maxMental = config.MaxMental;
             var minMental = config.MinMental;
-            int difference = maxMental - minMental+1;
+            int difference = maxMental - minMental + 1;
             double gap = (MentalBuffCeiling - MentalBuffFloor) / (difference - 1.0);
-            MentalBuffParams = new List<double>(difference + 1) {0};
-            for(int i=1;i<MentalBuffParams.Capacity;i++){
+            MentalBuffParams = new List<double>(difference + 1) { 0 };
+            for (int i = 1; i < MentalBuffParams.Capacity; i++) {
                 MentalBuffParams.Add(MentalBuffFloor + (i - 1) * gap);
             }
         }
@@ -57,7 +59,6 @@ namespace Nagopia {
             foreach (var item in array) {
                 CharaTemplates.Add((GameDataBase.CharacterProfession)item, new List<CharaProfTemplate>());
             }
-            //GetAllCharaTemplate();
             LoadAllCharaTemplate();
         }
 
@@ -86,11 +87,17 @@ namespace Nagopia {
         /// </summary>
         private static void LoadAllEquipmentTemplate() {
             var handle = Addressables.LoadAssetsAsync<EquipmentTemplate>("EquipmentTemplate", null);
-            handle.WaitForCompletion();
-            var list = ItemTemplates[ItemType.EQUIPMENT];
-            foreach (var item in handle.Result) {
-                list.Add(item);
-            }
+            handle.Completed += (handle) => {
+                var list = ItemTemplates[ItemType.EQUIPMENT];
+                foreach (var item in handle.Result) {
+                    list.Add(item);
+                }
+            };
+            //handle.WaitForCompletion();
+            //var list = ItemTemplates[ItemType.EQUIPMENT];
+            //foreach (var item in handle.Result) {
+            //    list.Add(item);
+            //}
         }
 
         /// <summary>
@@ -98,11 +105,17 @@ namespace Nagopia {
         /// </summary>
         private static void LoadAllCharaTemplate() {
             var handle = Addressables.LoadAssetsAsync<CharaProfTemplate>("CharacterTemplate", null);
-            handle.WaitForCompletion();
-            var res = handle.Result;
-            foreach (var item in res) {
-                CharaTemplates[item.AdaptProf].Add(item);
-            }
+            handle.Completed += (handle) => {
+                var res = handle.Result;
+                foreach (var item in res) {
+                    CharaTemplates[item.AdaptProf].Add(item);
+                }
+            };
+            //handle.WaitForCompletion();
+            //var res = handle.Result;
+            //foreach (var item in res) {
+            //    CharaTemplates[item.AdaptProf].Add(item);
+            //}
         }
 
         /// <summary>
@@ -111,16 +124,24 @@ namespace Nagopia {
         private static void LoadAllEnemyTemplate() {
             var handle = Addressables.LoadAssetsAsync<EnemyTemplate>("EnemyTemplate", null);
             handle.Completed += (handle) => {
-                var res=handle.Result;
+                var res = handle.Result;
                 foreach (var item in res) {
                     EnemyTemplates[item.rank].Add(item);
                 }
             };
             var Teamhandle = Addressables.LoadAssetsAsync<EnemyTeamTemplate>("EnemyTeamTemplate", null);
-            Teamhandle.Completed += (handle) => { var res = handle.Result;
+            Teamhandle.Completed += (handle) => {
+                var res = handle.Result;
                 foreach (EnemyTeamTemplate item in res) {
                     EnemyTeamTemplates[item.describtion].Add(item);
                 }
+            };
+        }
+
+        public static void LoadALlAudioClips() {
+            var handle = Addressables.LoadAssetsAsync<AudioClip>("Audios", null);
+            handle.Completed += (handle) => {
+                AudioClipList = handle.Result.ToList();
             };
         }
 
@@ -133,19 +154,19 @@ namespace Nagopia {
             var templates = CharaTemplates.Values.ToList();
             CharaProfTemplate template = null;
             foreach (var item in templates) {
-                template=item.Find((x)=>x.name== name);
-                if(template!=null) 
+                template = item.Find((x) => x.name == name);
+                if (template != null)
                     return template;
             }
             return template;
         }
 
-        public static CharaProfTemplate GetCharaTemplate(GameDataBase.CharacterProfession[]requiredProfs) {
+        public static CharaProfTemplate GetCharaTemplate(GameDataBase.CharacterProfession[] requiredProfs) {
             List<CharaProfTemplate> wanted = new List<CharaProfTemplate>();
             foreach (var item in requiredProfs) {
                 wanted.AddRange(CharaTemplates[item]);
             }
-            wanted=wanted.OrderByDescending((item) => item.Probability).ToList();
+            wanted = wanted.OrderByDescending((item) => item.Probability).ToList();
             foreach (var item in wanted) {
                 if (RandomNumberGenerator.Happened(item.Probability)) {
                     return item;
@@ -169,9 +190,9 @@ namespace Nagopia {
         /// <returns></returns>
         public static EquipmentTemplate GetEquipmentTemplate(string name) {
             var equipmentList = ItemTemplates[ItemType.EQUIPMENT];
-            var targets=equipmentList.FindAll((item)=>item.name== name);
-            if(targets.Count==0) return null;
-            return targets[RandomNumberGenerator.Average_GetRandomNumber(0, targets.Count,false)] as EquipmentTemplate;
+            var targets = equipmentList.FindAll((item) => item.name == name);
+            if (targets.Count == 0) return null;
+            return targets[RandomNumberGenerator.Average_GetRandomNumber(0, targets.Count, false)] as EquipmentTemplate;
         }
 
         /// <summary>
@@ -196,7 +217,7 @@ namespace Nagopia {
             int index = 0;
             int count = final.Count();
             if (count > 1) {
-                index = RandomNumberGenerator.Average_GetRandomNumber(0, count,false);
+                index = RandomNumberGenerator.Average_GetRandomNumber(0, count, false);
             }
             return final.ElementAt(index) as EquipmentTemplate;
         }
@@ -209,8 +230,8 @@ namespace Nagopia {
         public static EnemyTemplate GetEnemyTemplate(string name) {
             var lists = EnemyTemplates.Values;
             foreach (var item in lists) {
-                var template=item.Find((x)=>x.name== name);
-                if (template != null) 
+                var template = item.Find((x) => x.name == name);
+                if (template != null)
                     return template;
             }
             return null;
@@ -222,31 +243,51 @@ namespace Nagopia {
         /// <param name="rarity"></param>
         /// <param name="duty"></param>
         /// <returns></returns>
-        public static EnemyTemplate GetEnemyTemplate(GameDataBase.EnemyRarity rarity,GameDataBase.EnemyDuty duty) {
+        public static EnemyTemplate GetEnemyTemplate(GameDataBase.EnemyRarity rarity, GameDataBase.EnemyDuty duty) {
             var list = EnemyTemplates[rarity];
-            var res=list.FindAll((x)=>x.duty== duty);
-            if(res.Count==0)
+            var res = list.FindAll((x) => x.duty == duty);
+            if (res.Count == 0)
                 return null;
             return res[RandomNumberGenerator.Average_GetRandomNumber(0, res.Count, false)];
         }
 
-        public static EnemyTeamTemplate GetEnemyTeamTemplate(int difficulty,int required=0) {
+        public static EnemyTeamTemplate GetEnemyTeamTemplate(int difficulty, int required = 0) {
             if (required == 0) {
-                var list=new List<EnemyTeamTemplate>();
+                var list = new List<EnemyTeamTemplate>();
                 foreach (var item in EnemyTeamTemplates.Values) {
                     list.AddRange(item);
                 }
-                var res = list.FindAll(x => x.Equals(difficulty));
+                //var res = list.FindAll(x => x.Equals(difficulty));
+                var res = list.FindAll(x => x.CanAppear(difficulty) && x.describtion <= GameDataBase.EnemyTeamDescribtion.NORMAL);
                 if (res.Count == 0)
                     return list[0];
-                return res[RandomNumberGenerator.Average_GetRandomNumber(0, res.Count)];
+                return res[RandomNumberGenerator.Average_GetRandomNumber(0, res.Count, false)];
             }
             else {
                 var list = EnemyTeamTemplates[(GameDataBase.EnemyTeamDescribtion)required];
                 var available = list.FindAll((x) => x.CanAppear(difficulty));
                 if (available.Count == 0)
                     return list[0];
-                return available[RandomNumberGenerator.Average_GetRandomNumber(0, available.Count)];
+                return available[RandomNumberGenerator.Average_GetRandomNumber(0, available.Count, false)];
+            }
+        }
+
+        public static AudioClip GetAudioClip(string name) {
+            return AudioClipList.Find((x) => string.Equals(name,x.name));
+        }
+
+        public static string TranslateCharacterProfession(CharacterProfession profession) {
+            switch (profession) {
+                case CharacterProfession.KNIGHT:
+                    return "骑士";
+                case CharacterProfession.RANGER:
+                    return "游侠";
+                case CharacterProfession.PRIEST:
+                    return "牧师";
+                case CharacterProfession.WARRIOR:
+                    return "勇士";
+                default:
+                    return string.Empty;
             }
         }
 
@@ -348,64 +389,65 @@ namespace Nagopia {
 
         public enum EnemyRarity {
             [InspectorName("弱")]
-            UNDERDOG=0,
+            UNDERDOG = 0,
 
             [InspectorName("普通")]
-            NORMAL=1,
+            NORMAL = 1,
 
             [InspectorName("精英")]
-            ELITE=3,
+            ELITE = 3,
 
-            BOSS=10,
+            BOSS = 10,
         }
 
-        public enum EnemyDuty{
+        public enum EnemyDuty {
             ATTACKER,
             CURE,
         }
 
         public enum AttackAnimationType {
-            CLOSE=0,
-            REMOTE=1,
+            CLOSE = 0,
+            REMOTE = 1,
         }
 
         public enum EnemyTeamDescribtion {
-            EASY=1,
-            NORMAL=2,
-            HARD=3,
-            EXTREME=4,
+            EASY = 1,
+            NORMAL = 2,
+            HARD = 3,
+            EXTREME = 4,
             BOSS,
         }
 
         public enum EventType {
-            INVALID=-1,
-            BATTLE_START=100,
-            CHARACTER_ATTACK=101,
-            CHARACTER_CURE=102,
-            CHARACTER_ESCAPE=103,
+            INVALID = -1,
+            BATTLE_START = 100,
+            CHARACTER_ATTACK = 101,
+            CHARACTER_CURE = 102,
+            CHARACTER_ESCAPE = 103,
             CHARACTER_HURT,
             CHARACTER_SUBSITITUDE,
             CHARACTER_DEFEATED,
             CHARACTER_DIED,
+            CHARACTER_LEVELUP,
             BATTLE_WIN,
 
-            EXP_GAINED=200,
-            RESTORE_TEAM=1000,
+            EXP_GAINED = 200,
+            RESTORE_TEAM = 1000,
             NEW_TEAMMATE_GENERATE,
             NEW_TEAMMATE_JOIN,
             NEW_TEAMMATE_REFUSE,
             NOTHINGHAPPENED,
 
-            GAMELOSE=10000,
+            GAMELOSE = 10000,
         }
 
         public static string GetRandomName() {
-            return NameList[RandomNumberGenerator.Average_GetRandomNumber(0, NameList.Length,false)];
+            return NameList[RandomNumberGenerator.Average_GetRandomNumber(0, NameList.Length, false)];
         }
 
         public static int GameStage = 0;
 
-        [NonSerialized,OdinSerialize]
+        [NonSerialized, OdinSerialize]
         [AssetsOnly]
         [AssetSelector]
         [ShowInInspector]
@@ -414,7 +456,7 @@ namespace Nagopia {
         [HideInInspector]
         public static GameConfig Config => config;
 
-        public static double[] mentalBuffs=>MentalBuffParams.ToArray();
+        public static double[] mentalBuffs => MentalBuffParams.ToArray();
 
         private static List<double> MentalBuffParams;
 
@@ -423,7 +465,9 @@ namespace Nagopia {
         private static readonly Dictionary<GameDataBase.ItemType, List<BaseItemTemplate>> ItemTemplates = new Dictionary<ItemType, List<BaseItemTemplate>>();
         private static readonly Dictionary<GameDataBase.EnemyTeamDescribtion, List<EnemyTeamTemplate>> EnemyTeamTemplates = new Dictionary<EnemyTeamDescribtion, List<EnemyTeamTemplate>>();
         //private static readonly Dictionary<GameDataBase.CharacterProfession, CharacterCurveTemple> ProfAbiTemplates = new Dictionary<CharacterProfession, CharacterCurveTemple>();
-        public static readonly string[] NameList = {"Miro","Wrp","Jack","Jesse","Harry","Kane","Rash","Madison","Tom","Jerry","Bruce","Wayne","Crack","Stack","Peter","Park","Tim","符成杰","王睿芃","Kratos","Ezio","Cristiano" };
+        public static readonly string[] NameList = { "Miro", "Wrp", "Jack", "Jesse", "Harry", "Kane", "Rash", "Madison", "Tom", "Jerry", "Bruce", "Wayne", "Crack", "Stack", "Peter", "Park", "Tim", "符成杰", "王睿芃", "Kratos", "Ezio", "Cristiano" };
+
+        public static List<AudioClip> AudioClipList=new List<AudioClip>();
     }
 
 

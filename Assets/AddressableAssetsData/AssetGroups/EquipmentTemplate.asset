@@ -37,6 +37,81 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - EquipmentTemplate
+  - m_GUID: 5d10270dc5af12c44941dc627facf5ba
+    m_Address: Assets/Resources_moved/Item Template/Equipments/AdvanceArmourTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: 84c2f35b50120d445b875f840fd5057a
+    m_Address: Assets/Resources_moved/Item Template/Equipments/AdvanceShoesTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: 673e6a1c289c1bf4f8e7924c1423e13f
+    m_Address: Assets/Resources_moved/Item Template/Equipments/ArmourTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: ae43bc2742e651f418b9cc19af47e8f4
+    m_Address: Assets/Resources_moved/Item Template/Equipments/BookTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: 003dc14d6261a6c4d93dfc61284438e2
+    m_Address: Assets/Resources_moved/Item Template/Equipments/BowTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: 9397ef8eaf2cc614b9f63e9bcb246fdf
+    m_Address: Assets/Resources_moved/Item Template/Equipments/KnightArmorTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: c80d535d8a9534548923de741c76dbe1
+    m_Address: Assets/Resources_moved/Item Template/Equipments/KnightHeadTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: 21196ff4cef8a2248815450e56e3e9ae
+    m_Address: Assets/Resources_moved/Item Template/Equipments/KnightShoesTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: c953726a1e6256d47a5caaf57eaf61ab
+    m_Address: Assets/Resources_moved/Item Template/Equipments/MagicCoatTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: a5c8f95d6537acc428e8859621ce77d9
+    m_Address: Assets/Resources_moved/Item Template/Equipments/MagicHeadTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: 995efc3c846955d42a6bd2f8865e9b7e
+    m_Address: Assets/Resources_moved/Item Template/Equipments/MagicShoesTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: 6db4f326cc4a94b47a0c3b7515c6f1a3
+    m_Address: Assets/Resources_moved/Item Template/Equipments/NormalHeadTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: 8d97049c89cbbac40a1b2e2767c5f9d2
+    m_Address: Assets/Resources_moved/Item Template/Equipments/ShoesTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: f22af4491b0687849aa12e9e67ff6e6b
+    m_Address: Assets/Resources_moved/Item Template/Equipments/StarMagicHeadTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
+  - m_GUID: 5d7831868e57e07409163dfb85e3f9cf
+    m_Address: Assets/Resources_moved/Item Template/Equipments/SwordTemplate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EquipmentTemplate
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e99fa8458a898e548bf079a14c502590, type: 2}
   m_SchemaSet:

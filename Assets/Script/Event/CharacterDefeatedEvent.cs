@@ -15,7 +15,7 @@ namespace Nagopia {
         public IBattleCharacter attacker;
 
         public override string ToString() {
-            return $"{victim.Name} was defeated by {attacker.Name}";
+            return $"{victim.Name}±»{attacker.Name}»÷µ¹ÁË";
         }
     }
 }

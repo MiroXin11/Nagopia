@@ -22,6 +22,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - EnemyTeamTemplate
+  - m_GUID: e213785c4b1ecce469fe731ace62a53b
+    m_Address: Assets/Resources_moved/Enemy Team/NormalTeam.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyTeamTemplate
+  - m_GUID: 887c31ca1062e6743ad49362adba3dfa
+    m_Address: Assets/Resources_moved/Enemy Team/BossTeam.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyTeamTemplate
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e99fa8458a898e548bf079a14c502590, type: 2}
   m_SchemaSet:
